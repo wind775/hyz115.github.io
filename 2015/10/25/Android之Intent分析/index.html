@@ -1,0 +1,820 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android,Intent," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="韩元桢博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="android的Intent是目的，意图之意，是android提供的一种协助应用程序间交互和通讯的机制。intent不仅可以用于应用程序间，也可以应用于应用程序内部间的Activity/service的交互，在Intent的使用中不会表现出函数的调用。相对于函数的调用而言，Intent更为抽象，调用Intent的基本元素是Activity/Service。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android之Intent分析">
+<meta property="og:url" content="http://hanyuanzhen.com/2015/10/25/Android之Intent分析/index.html">
+<meta property="og:site_name" content="韩元桢博客">
+<meta property="og:description" content="android的Intent是目的，意图之意，是android提供的一种协助应用程序间交互和通讯的机制。intent不仅可以用于应用程序间，也可以应用于应用程序内部间的Activity/service的交互，在Intent的使用中不会表现出函数的调用。相对于函数的调用而言，Intent更为抽象，调用Intent的基本元素是Activity/Service。">
+<meta property="og:updated_time" content="2017-03-11T13:10:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android之Intent分析">
+<meta name="twitter:description" content="android的Intent是目的，意图之意，是android提供的一种协助应用程序间交互和通讯的机制。intent不仅可以用于应用程序间，也可以应用于应用程序内部间的Activity/service的交互，在Intent的使用中不会表现出函数的调用。相对于函数的调用而言，Intent更为抽象，调用Intent的基本元素是Activity/Service。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hanyuanzhen.com/2015/10/25/Android之Intent分析/"/>
+
+
+
+
+
+  <title> Android之Intent分析 | 韩元桢博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?342455f7213d6823f6fb04e6524cf764";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">韩元桢博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">程序猿，创客，水瓶座</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '8nZVu5iST4G6rUN7-3Tx','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://hanyuanzhen.com/2015/10/25/Android之Intent分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HanYuanZhen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩元桢博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android之Intent分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-10-25T23:54:00+08:00">
+                2015-10-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android开发/" itemprop="url" rel="index">
+                    <span itemprop="name">android开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/10/25/Android之Intent分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/25/Android之Intent分析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>android的Intent是目的，意图之意，是android提供的一种协助应用程序间交互和通讯的机制。intent不仅可以用于应用程序间，也可以应用于应用程序内部间的Activity/service的交互，在Intent的使用中不会表现出函数的调用。相对于函数的调用而言，Intent更为抽象，调用Intent的基本元素是Activity/Service。<br><a id="more"></a><br><strong>一、Intent的简介</strong></p>
+</blockquote>
+<p>android的Intent是目的，意图之意，是android提供的一种协助应用程序间交互和通讯的机制。intent不仅可以用于应用程序间，也可以应用于应用程序内部间的Activity/service的交互，在Intent的使用中不会表现出函数的调用。相对于函数的调用而言，Intent更为抽象，调用Intent的基本元素是Activity/Service。</p>
+<p><strong>二、Intent的基本用法</strong><br>    Android中与Intent相关的还有Action/Category及IntentFilter等，以及用于广播的Intent，那下面来说明Intent的一些用法:<br>    Intent的2种基本用法为1.显示的Intent,即在构造Intent对象就指定接受者；2.隐士的Intent，即Intent的发送者在构造Intent对象时，并不知道也不关心接受者是谁。<br><strong>(1)显示的Intent</strong><br>1.同一个应用程序间Activity的切换<br>通常一个应用程序中需要多个UI 屏幕，也就需要多个Activity 类，并且在这些 Activity 之间进行切换，这种切换就是通过 Intent 机制来实现的<br>在同一个应用程序中切换 Activity时，我们通常都知道要启动的 Activity 具体是哪一个，因此常用显式的 Intent 来实现。下面的例子用来实现一个非常简单的应用程序 SimpleIntentTest ，它包括两个UI 屏幕也就是两个 Activity——SimpleIntentTest类和 TestActivity 类， SimpleIntentTest类有一个按钮用来启动 TestActivity。<br>程序的代码非常简单， SimpleIntentTest类的源代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span>   <span class="class"><span class="keyword">class</span>  <span class="title">SimpleIntentTest</span>  <span class="keyword">extends</span>  <span class="title">Activity</span>  <span class="keyword">implements</span>  <span class="title">View</span>.<span class="title">OnClickListener</span></span>&#123;</div><div class="line"></div><div class="line">     <span class="meta">@Override</span></div><div class="line"></div><div class="line">     <span class="function"><span class="keyword">public</span>   <span class="keyword">void</span>  <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line"></div><div class="line">         <span class="keyword">super</span> .onCreate(savedInstanceState);</div><div class="line"></div><div class="line">        setContentView(R.layout. main );</div><div class="line"></div><div class="line">        Button startBtn = (Button)findViewById(R.id. start_activity );</div><div class="line"></div><div class="line">        startBtn.setOnClickListener( <span class="keyword">this</span> );</div><div class="line"></div><div class="line">    &#125;</div><div class="line">     <span class="function"><span class="keyword">public</span>   <span class="keyword">void</span>  <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line"></div><div class="line">         <span class="keyword">switch</span>  (v.getId()) &#123;</div><div class="line"></div><div class="line">         <span class="keyword">case</span>  R.id. start_activity :</div><div class="line"></div><div class="line">            Intent intent =  <span class="keyword">new</span>  Intent( <span class="keyword">this</span> , TestActivity. <span class="class"><span class="keyword">class</span> )</span>;</div><div class="line"></div><div class="line">            startActivity(intent);</div><div class="line"></div><div class="line">             <span class="keyword">break</span> ;</div><div class="line"></div><div class="line">         <span class="keyword">default</span> :</div><div class="line"></div><div class="line">             <span class="keyword">break</span> ;</div><div class="line"></div><div class="line">         &#125;</div><div class="line"></div><div class="line">    &#125;   </div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Intent intent =  new  Intent( this , TestActivity. class );<br>startActivity(intent);<br>这里定义 Intent 对象时所用到的是 Intent 的构造函数之一：<br>Intent ( Context  packageContext,  Class &lt;?&gt; cls)<br>两个参数分别指定 Context 和 Class ，由于将Class 设置为 TestActivity.class，这样便显式的指定了TestActivity 类作为 该Intent 的 接收者，<br>通过后面的startActivity() 方法便可启动 TestActivity 。<br>定义好TestActivity后，则需要 在AndroidManifest.xml 中增加TestActivity 的声明:</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt; activity   android:<span class="built_in">name</span> = <span class="string">".TestActivity"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>2.不同应用程序间Actvity的切换<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Intent</span> <span class="keyword">intent</span> =  new  <span class="keyword">Intent</span>();</div><div class="line"><span class="keyword">intent</span>.setClassName( <span class="string">"com.tope.samples.intent.simple"</span> , </div><div class="line">		 <span class="string">"com.tope.samples.intent.simple.TestActivity"</span> );</div><div class="line">startActivity(<span class="keyword">intent</span>);</div></pre></td></tr></table></figure></p>
+<p><strong>(2).隐式 Intent(Implicit Intent)</strong><br>        如果 Intent 机制仅仅提供上面的显式 Intent 用法的话，这种相对复杂的机制似乎意义并不是很大。确 实，Intent 机制更重要的作用在于下面这种隐式的 Intent ，即 Intent 的发送者不指定接收者，很可能不知道也不关心接收者是谁，而由 Android 框架去寻找最匹配的接收者<br>1.最简单的隐式Intent<br>下面定义一个用来启动 Android 自带的打电话功能的 Dialer 程序。</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span>   <span class="class"><span class="keyword">class</span>  <span class="title">ImplicitIntentTest</span>  <span class="keyword">extends</span>  <span class="title">Activity</span>     </span></div><div class="line"></div><div class="line">     <span class="keyword">implements</span>  <span class="title">View</span>.<span class="title">OnClickListener</span>&#123;</div><div class="line"></div><div class="line">     <span class="comment">/**   Called   when   the   activity   is   first   created.   */</span></div><div class="line"></div><div class="line">     <span class="meta">@Override</span></div><div class="line"></div><div class="line">     <span class="keyword">public</span>   <span class="function"><span class="keyword">void</span>  <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line"></div><div class="line">         <span class="keyword">super</span> .onCreate(savedInstanceState);</div><div class="line"></div><div class="line">        setContentView(R.layout. main );</div><div class="line"></div><div class="line">        Button startBtn = (Button)findViewById(R.id. dial );</div><div class="line"></div><div class="line">        startBtn.setOnClickListener( <span class="keyword">this</span> );</div><div class="line"></div><div class="line">    &#125;</div><div class="line">     <span class="keyword">public</span>   <span class="function"><span class="keyword">void</span>  <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line"></div><div class="line">         <span class="keyword">switch</span>  (v.getId()) &#123;</div><div class="line"></div><div class="line">         <span class="keyword">case</span>  R.id. dial :</div><div class="line"></div><div class="line">            Intent intent =  <span class="keyword">new</span>  Intent(Intent. ACTION_DIAL );</div><div class="line"></div><div class="line">            startActivity(intent);</div><div class="line"></div><div class="line">             <span class="keyword">break</span> ;</div><div class="line"></div><div class="line">         <span class="keyword">default</span> :</div><div class="line"></div><div class="line">             <span class="keyword">break</span> ;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;   </div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>与显示Intent的方式不同，此方式指定接受者，初始化Intent时，只是传入Intent. ACTION_DIAL参数，没有显示的支持哪个接收者。<br>2.增加一个接收者<br>若接收者希望能接收某些Intent，则需要在AndroidMainfest.xml中增加Activity的声明，并设置对应的IntentFilter,Action，如:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt; <span class="attr">activity</span>   <span class="attr">android:name</span> = <span class="string">".TestActivity"</span> &gt;</span></div><div class="line"></div><div class="line">         <span class="tag">&lt; <span class="attr">intent-filter</span> &gt;</span></div><div class="line"></div><div class="line">             <span class="tag">&lt; <span class="attr">action</span>   <span class="attr">android:name</span> = <span class="string">"android.intent.action.DEFAULT"</span>   /&gt;</span></div><div class="line"></div><div class="line">             <span class="tag">&lt; <span class="attr">action</span>   <span class="attr">android:name</span> = <span class="string">"android.intent.action.DIAL"</span>   /&gt;</span></div><div class="line"></div><div class="line">             <span class="tag">&lt; <span class="attr">category</span>   <span class="attr">android:name</span> = <span class="string">"android.intent.category.DEFAULT"</span>  /&gt;</span></div><div class="line"></div><div class="line">         <span class="tag">&lt;/ <span class="attr">intent-filter</span> &gt;</span></div><div class="line"></div><div class="line">     <span class="tag">&lt;/ <span class="attr">activity</span> &gt;</span></div></pre></td></tr></table></figure>
+<p>Intent Filter 及 Action, Category 等概念—— Intent 发送者设定 Action 来说明将要进行的动作，而 Intent 的接收者在 AndroidManifest.xml 文件中通过设定 Intent Filter来声明自己能接收哪些Intent</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+            <a href="/tags/Intent/" rel="tag"># Intent</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/22/主流HTML5游戏开发引擎的分析和对比/" rel="next" title="主流HTML5游戏开发引擎的分析和对比">
+                <i class="fa fa-chevron-left"></i> 主流HTML5游戏开发引擎的分析和对比
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/05/swiper图片轮播插件/" rel="prev" title="swiper图片轮播插件">
+                swiper图片轮播插件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/10/25/Android之Intent分析/"
+     data-title="Android之Intent分析"
+     data-content=""
+     data-url="http://hanyuanzhen.com/2015/10/25/Android之Intent分析/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/10/25/Android之Intent分析/"
+           data-title="Android之Intent分析" data-url="http://hanyuanzhen.com/2015/10/25/Android之Intent分析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="HanYuanZhen" />
+          <p class="site-author-name" itemprop="name">HanYuanZhen</p>
+           
+              <p class="site-description motion-element" itemprop="description">韩元桢博客 技术博客 学习总结 思考感悟 知识管理</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="hyz115" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/hanyuanzhen" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HanYuanZhen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hanyuanzhen"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

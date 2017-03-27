@@ -1,0 +1,898 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="web开发,xml," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="韩元桢博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="一般的工程都会有用到web.xml文件,但不是必须的，web.xml的主要作用是配置，主要配置filter ,listener,servlet,session等，下面分析下web.xml中给元素的加载顺序。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web.xml配置的元素加载顺序和详解">
+<meta property="og:url" content="http://hanyuanzhen.com/2014/04/12/web.xml配置的元素加载顺序和详解/index.html">
+<meta property="og:site_name" content="韩元桢博客">
+<meta property="og:description" content="一般的工程都会有用到web.xml文件,但不是必须的，web.xml的主要作用是配置，主要配置filter ,listener,servlet,session等，下面分析下web.xml中给元素的加载顺序。">
+<meta property="og:updated_time" content="2017-03-11T13:10:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web.xml配置的元素加载顺序和详解">
+<meta name="twitter:description" content="一般的工程都会有用到web.xml文件,但不是必须的，web.xml的主要作用是配置，主要配置filter ,listener,servlet,session等，下面分析下web.xml中给元素的加载顺序。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hanyuanzhen.com/2014/04/12/web.xml配置的元素加载顺序和详解/"/>
+
+
+
+
+
+  <title> web.xml配置的元素加载顺序和详解 | 韩元桢博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?342455f7213d6823f6fb04e6524cf764";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">韩元桢博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">程序猿，创客，水瓶座</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '8nZVu5iST4G6rUN7-3Tx','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://hanyuanzhen.com/2014/04/12/web.xml配置的元素加载顺序和详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HanYuanZhen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩元桢博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                web.xml配置的元素加载顺序和详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-04-12T23:22:00+08:00">
+                2014-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web开发/" itemprop="url" rel="index">
+                    <span itemprop="name">web开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/04/12/web.xml配置的元素加载顺序和详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/12/web.xml配置的元素加载顺序和详解/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>一般的工程都会有用到web.xml文件,但不是必须的，web.xml的主要作用是配置，主要配置filter ,listener,servlet,session等，下面分析下web.xml中给元素的加载顺序。<br><a id="more"></a></p>
+<h4 id="一、web-xml加载过程"><a href="#一、web-xml加载过程" class="headerlink" title="一、web.xml加载过程"></a><strong>一、web.xml加载过程</strong></h4><p>web工程中加载跟配置的参数与节点的顺序没有关系,主要加载顺序为ServletContext -&gt; context-param -&gt; listener -&gt; filter -&gt; servlet。并且这些元素可以配置在文件中的任意位置。<br><strong>（1）、加载过程如下:</strong><br>启动web项目时，会现在加载web.xml文件,读取listener和context-param节点，然后会加载servletcontext(servlet上下文)，这个web项目的所有部分都将共享这个上下文。<br>容器将<context-param>转换为键值对，并交给servletContext。<br>容器创建<listener>中的类实例，创建监听器。</listener></context-param></p>
+<h4 id="二、web-xml各节点详细分析"><a href="#二、web-xml各节点详细分析" class="headerlink" title="二、web.xml各节点详细分析:"></a><strong>二、web.xml各节点详细分析:</strong></h4><p>schema,按照sun公司的指定来定义，都必须标明这个 web.xml使用的是哪个模式文件。其它的元素都放在web-app的节点之中。</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">"http://java.sun.com/xml/ns/j2ee"</span></span></div><div class="line"><span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">version</span>=<span class="string">"2.4"</span></div><div class="line"><span class="attr">xsi:schemaLocation</span>=<span class="string">"http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"</span>&gt;</div></pre></td></tr></table></figure>
+<p><strong>（2）、以下为引用别人对web.xml中其他元素的总结，主要总结如下:</strong><br>display-name:定义了WEB应用的名字<br>description: 声明WEB应用的描述信息   </p>
+<p>context-param:元素声明应用范围内的初始化参数。<br>filter:过滤器元素将一个名字与一个实现javax.servlet.Filter接口的类相关联。<br>filter-mapping:一旦命名了一个过滤器，就要利用filter-mapping元素把它与一个或多个servlet或JSP页面相关联。<br>listener:servlet API的版本2.3增加了对事件监听程序的支持，事件监听程序在建立、修改和删除会话或servlet环境时得到通知。<br>                     Listener元素指出事件监听程序类。<br>servlet:在向servlet或JSP页面制定初始化参数或定制URL时，必须首先命名servlet或JSP页面。Servlet元素就是用来完成此项任务的。<br>servlet-mapping:服务器一般为servlet提供一个缺省的URL：<a href="http://host/webAppPrefix/servlet/ServletName。" target="_blank" rel="external">http://host/webAppPrefix/servlet/ServletName。</a><br>              但是，常常会更改这个URL，以便servlet可以访问初始化参数或更容易地处理相对URL。在更改缺省URL时，使用servlet-mapping元素。   </p>
+<p>session-config:如果某个会话在一定时间内未被访问，服务器可以抛弃它以节省内存。<br>          可通过使用HttpSession的setMaxInactiveInterval方法明确设置单个会话对象的超时值，或者可利用session-config元素制定缺省超时值。   </p>
+<p>mime-mapping:如果Web应用具有想到特殊的文件，希望能保证给他们分配特定的MIME类型，则mime-mapping元素提供这种保证。<br>welcome-file-list:指示服务器在收到引用一个目录名而不是文件名的URL时，使用哪个文件。<br>error-page:在返回特定HTTP状态代码时，或者特定类型的异常被抛出时，能够制定将要显示的页面。<br>taglib:对标记库描述符文件（Tag Libraryu Descriptor file）指定别名。此功能使你能够更改TLD文件的位置，<br>                  而不用编辑使用这些文件的JSP页面。<br>resource-env-ref:声明与资源相关的一个管理对象。<br>resource-ref:声明一个资源工厂使用的外部资源。<br>security-constraint:制定应该保护的URL。它与login-config元素联合使用<br>login-config:指定服务器应该怎样给试图访问受保护页面的用户授权。它与sercurity-constraint元素联合使用。<br>security-role:给出安全角色的一个列表，这些角色将出现在servlet元素内的security-role-ref元素<br>                   的role-name子元素中。分别地声明角色可使高级IDE处理安全信息更为容易。<br>env-entry:声明Web应用的环境项。   </p>
+<p>  <strong>（3）、相应元素配置</strong>   </p>
+<p>1、Web应用图标：指出IDE和GUI工具用来表示Web应用的大图标和小图标   </p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="params">&lt;icon&gt;</span>   </div><div class="line"><span class="params">&lt;small-icon&gt;</span><span class="meta-keyword">/images/</span>app_small.gif<span class="params">&lt;/small-icon&gt;</span>   </div><div class="line"><span class="params">&lt;large-icon&gt;</span><span class="meta-keyword">/images/</span>app_large.gif<span class="params">&lt;/large-icon&gt;</span>   </div><div class="line"><span class="params">&lt;/icon&gt;</span></div></pre></td></tr></table></figure>
+<p>2、Web 应用名称：提供GUI工具可能会用来标记这个特定的Web应用的一个名称   </p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;display-<span class="built_in">name</span>&gt;Tomcat Example&lt;/display-<span class="built_in">name</span>&gt;</div></pre></td></tr></table></figure>
+<p>3、Web 应用描述： 给出于此相关的说明性文本   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">disciption</span>&gt;</span>Tomcat Example servlets and JSP pages.<span class="tag">&lt;/<span class="name">disciption</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>4、上下文参数：声明应用范围内的初始化参数。   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">context-param</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>ContextParameter<span class="tag">&lt;/<span class="name">para-name</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>test<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;<span class="name">description</span>&gt;</span>It is a test parameter.<span class="tag">&lt;/<span class="name">description</span>&gt;</span>   </div><div class="line"> <span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>  在servlet里面可以通过getServletContext().getInitParameter(“context/param”)得到   </p>
+<p>5、过滤器配置：将一个名字与一个实现javaxs.servlet.Filter接口的类相关联。   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span>   </div><div class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>setCharacterEncoding<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span>   </div><div class="line">        <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.myTest.setCharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span>   </div><div class="line">        <span class="tag">&lt;<span class="name">init-param</span>&gt;</span>   </div><div class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span>   </div><div class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>GB2312<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span>   </div><div class="line">        <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span>   </div><div class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span>   </div><div class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span>   </div><div class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>setCharacterEncoding<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span>   </div><div class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span>   </div><div class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>6、监听器配置   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;<span class="name">listerner-class</span>&gt;</span>listener.SessionListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span>   </div><div class="line">  <span class="tag">&lt;/<span class="name">listener</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>7、Servlet配置<br>   基本配置   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span>   </div><div class="line">     <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>snoop<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span>   </div><div class="line">     <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>SnoopServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span>   </div><div class="line">  <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span>   </div><div class="line">  <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span>   </div><div class="line">     <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>snoop<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span>   </div><div class="line">     <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/snoop<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span>   </div><div class="line">  <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>   高级配置   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>snoop<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>SnoopServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;<span class="name">init-param</span>&gt;</span>   </div><div class="line">         <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>foo<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span>   </div><div class="line">         <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>bar<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;<span class="name">run-as</span>&gt;</span>   </div><div class="line">         <span class="tag">&lt;<span class="name">description</span>&gt;</span>Security role for anonymous access<span class="tag">&lt;/<span class="name">description</span>&gt;</span>   </div><div class="line">         <span class="tag">&lt;<span class="name">role-name</span>&gt;</span>tomcat<span class="tag">&lt;/<span class="name">role-name</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;/<span class="name">run-as</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>snoop<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/snoop<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>   元素说明   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span> 用来声明一个servlet的数据，主要有以下子元素：   </div><div class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span><span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span> 指定servlet的名称   </div><div class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span><span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span> 指定servlet的类名称   </div><div class="line">    <span class="tag">&lt;<span class="name">jsp-file</span>&gt;</span><span class="tag">&lt;/<span class="name">jsp-file</span>&gt;</span> 指定web站台中的某个JSP网页的完整路径   </div><div class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span><span class="tag">&lt;/<span class="name">init-param</span>&gt;</span> 用来定义参数，可有多个init-param。在servlet类中通过getInitParamenter(String name)方法访问初始化参数   </div><div class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span><span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span>指定当Web应用启动时，装载Servlet的次序。   </div><div class="line">                                当值为正数或零时：Servlet容器先加载数值小的servlet，再依次加载其他数值大的servlet.   </div><div class="line">                                当值为负或未定义：Servlet容器将在Web客户首次访问这个servlet时加载它   </div><div class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span> 用来定义servlet所对应的URL，包含两个子元素   </div><div class="line">      <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span><span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span> 指定servlet的名称   </div><div class="line">      <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span><span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span> 指定servlet所对应的URL</div></pre></td></tr></table></figure>
+<p>8、会话超时配置（单位为分钟）   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">session-config</span>&gt;</span>   </div><div class="line">     <span class="tag">&lt;<span class="name">session-timeout</span>&gt;</span>120<span class="tag">&lt;/<span class="name">session-timeout</span>&gt;</span>   </div><div class="line">  <span class="tag">&lt;/<span class="name">session-config</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>9、MIME类型配置   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mime-mapping</span>&gt;</span>   </div><div class="line">    <span class="tag">&lt;<span class="name">extension</span>&gt;</span>htm<span class="tag">&lt;/<span class="name">extension</span>&gt;</span>   </div><div class="line">    <span class="tag">&lt;<span class="name">mime-type</span>&gt;</span>text/html<span class="tag">&lt;/<span class="name">mime-type</span>&gt;</span>   </div><div class="line"> <span class="tag">&lt;/<span class="name">mime-mapping</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>10、指定欢迎文件页配置   </p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">&lt;welcome-file-list&gt;</span>   </div><div class="line">      <span class="symbol">&lt;welcome-file&gt;</span><span class="built_in">index</span>.jsp&lt;/welcome-<span class="keyword">file</span>&gt;   </div><div class="line">      <span class="symbol">&lt;welcome-file&gt;</span><span class="built_in">index</span>.html&lt;/welcome-<span class="keyword">file</span>&gt;   </div><div class="line">      <span class="symbol">&lt;welcome-file&gt;</span><span class="built_in">index</span>.htm&lt;/welcome-<span class="keyword">file</span>&gt;   </div><div class="line">   &lt;/welcome-<span class="keyword">file</span>-<span class="keyword">list</span>&gt;</div></pre></td></tr></table></figure>
+<p>11、配置错误页面<br> 通过错误码来配置error-page   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">error-page</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;<span class="name">error-code</span>&gt;</span>404<span class="tag">&lt;/<span class="name">error-code</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;<span class="name">location</span>&gt;</span>/NotFound.jsp<span class="tag">&lt;/<span class="name">location</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;/<span class="name">error-page</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>  上面配置了当系统发生404错误时，跳转到错误处理页面NotFound.jsp。<br>通过异常的类型配置error-page   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">error-page</span>&gt;</span>   </div><div class="line">       <span class="tag">&lt;<span class="name">exception-type</span>&gt;</span>java.lang.NullException<span class="tag">&lt;/<span class="name">exception-type</span>&gt;</span>   </div><div class="line">       <span class="tag">&lt;<span class="name">location</span>&gt;</span>/error.jsp<span class="tag">&lt;/<span class="name">location</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;/<span class="name">error-page</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>  上面配置了当系统发生java.lang.NullException（即空指针异常）时，跳转到错误处理页面error.jsp<br>12、TLD配置   </p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="params">&lt;taglib&gt;</span>   </div><div class="line">      <span class="params">&lt;taglib-uri&gt;</span>http:<span class="comment">//jakarta.apache.org/tomcat/debug-taglib&lt;/taglib-uri&gt;   </span></div><div class="line">      <span class="params">&lt;taglib-location&gt;</span>/WEB-INF<span class="meta-keyword">/jsp/</span>debug-taglib.tld<span class="params">&lt;/taglib-location&gt;</span>   </div><div class="line">  <span class="params">&lt;/taglib&gt;</span>   </div><div class="line">  如果MyEclipse一直在报错,应该把<span class="params">&lt;taglib&gt;</span> 放到 <span class="params">&lt;jsp-config&gt;</span>中   </div><div class="line">  <span class="params">&lt;jsp-config&gt;</span>   </div><div class="line">     <span class="params">&lt;taglib&gt;</span>   </div><div class="line">         <span class="params">&lt;taglib-uri&gt;</span>http:<span class="comment">//jakarta.apache.org/tomcat/debug-taglib&lt;/taglib-uri&gt;   </span></div><div class="line">         <span class="params">&lt;taglib-location&gt;</span>/WEB-INF/pager-taglib.tld<span class="params">&lt;/taglib-location&gt;</span>   </div><div class="line">     <span class="params">&lt;/taglib&gt;</span>   </div><div class="line">  <span class="params">&lt;/jsp-config&gt;</span></div></pre></td></tr></table></figure>
+<p>13、资源管理对象配置   </p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;resource-env-<span class="keyword">ref</span>&gt;   </div><div class="line">      &lt;resource-env-<span class="keyword">ref</span>-<span class="built_in">name</span>&gt;jms/StockQueue&lt;/resource-env-<span class="keyword">ref</span>-<span class="built_in">name</span>&gt;   </div><div class="line">  &lt;/resource-env-<span class="keyword">ref</span>&gt;</div></pre></td></tr></table></figure>
+<p>14、资源工厂配置   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resource-ref</span>&gt;</span>   </div><div class="line">       <span class="tag">&lt;<span class="name">res-ref-name</span>&gt;</span>mail/Session<span class="tag">&lt;/<span class="name">res-ref-name</span>&gt;</span>   </div><div class="line">       <span class="tag">&lt;<span class="name">res-type</span>&gt;</span>javax.mail.Session<span class="tag">&lt;/<span class="name">res-type</span>&gt;</span>   </div><div class="line">       <span class="tag">&lt;<span class="name">res-auth</span>&gt;</span>Container<span class="tag">&lt;/<span class="name">res-auth</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;/<span class="name">resource-ref</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>   配置数据库连接池就可在此配置：   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resource-ref</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;<span class="name">description</span>&gt;</span>JNDI JDBC DataSource of shop<span class="tag">&lt;/<span class="name">description</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;<span class="name">res-ref-name</span>&gt;</span>jdbc/sample_db<span class="tag">&lt;/<span class="name">res-ref-name</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;<span class="name">res-type</span>&gt;</span>javax.sql.DataSource<span class="tag">&lt;/<span class="name">res-type</span>&gt;</span>   </div><div class="line">      <span class="tag">&lt;<span class="name">res-auth</span>&gt;</span>Container<span class="tag">&lt;/<span class="name">res-auth</span>&gt;</span>   </div><div class="line">  <span class="tag">&lt;/<span class="name">resource-ref</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>15、安全限制配置   </p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="params">&lt;security-constraint&gt;</span>   </div><div class="line">      <span class="params">&lt;display-name&gt;</span>Example Security Constraint<span class="params">&lt;/display-name&gt;</span>   </div><div class="line">      <span class="params">&lt;web-resource-collection&gt;</span>   </div><div class="line">         <span class="params">&lt;web-resource-name&gt;</span>Protected Area<span class="params">&lt;/web-resource-name&gt;</span>   </div><div class="line">         <span class="params">&lt;url-pattern&gt;</span><span class="meta-keyword">/jsp/</span>security<span class="meta-keyword">/protected/</span>*<span class="params">&lt;/url-pattern&gt;</span>   </div><div class="line">         <span class="params">&lt;http-method&gt;</span>DELETE<span class="params">&lt;/http-method&gt;</span>   </div><div class="line">         <span class="params">&lt;http-method&gt;</span>GET<span class="params">&lt;/http-method&gt;</span>   </div><div class="line">         <span class="params">&lt;http-method&gt;</span>POST<span class="params">&lt;/http-method&gt;</span>   </div><div class="line">         <span class="params">&lt;http-method&gt;</span>PUT<span class="params">&lt;/http-method&gt;</span>   </div><div class="line">      <span class="params">&lt;/web-resource-collection&gt;</span>   </div><div class="line">      <span class="params">&lt;auth-constraint&gt;</span>   </div><div class="line">        <span class="params">&lt;role-name&gt;</span>tomcat<span class="params">&lt;/role-name&gt;</span>   </div><div class="line">        <span class="params">&lt;role-name&gt;</span>role1<span class="params">&lt;/role-name&gt;</span>   </div><div class="line">      <span class="params">&lt;/auth-constraint&gt;</span>   </div><div class="line">   <span class="params">&lt;/security-constraint&gt;</span></div></pre></td></tr></table></figure>
+<p>16、登陆验证配置   </p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="params">&lt;login-config&gt;</span>   </div><div class="line">     <span class="params">&lt;auth-method&gt;</span>FORM<span class="params">&lt;/auth-method&gt;</span>   </div><div class="line">     <span class="params">&lt;realm-name&gt;</span>Example-Based Authentiation Area<span class="params">&lt;/realm-name&gt;</span>   </div><div class="line">     <span class="params">&lt;form-login-config&gt;</span>   </div><div class="line">        <span class="params">&lt;form-login-page&gt;</span><span class="meta-keyword">/jsp/</span>security<span class="meta-keyword">/protected/</span>login.jsp<span class="params">&lt;/form-login-page&gt;</span>   </div><div class="line">        <span class="params">&lt;form-error-page&gt;</span><span class="meta-keyword">/jsp/</span>security<span class="meta-keyword">/protected/</span>error.jsp<span class="params">&lt;/form-error-page&gt;</span>   </div><div class="line">     <span class="params">&lt;/form-login-config&gt;</span>   </div><div class="line">   <span class="params">&lt;/login-config&gt;</span></div></pre></td></tr></table></figure>
+<p>17、安全角色：security-role元素给出安全角色的一个列表，这些角色将出现在servlet元素内的security-role-ref元素的role-name子元素中,分别地声明角色可使高级IDE处理安全信息更为容易。   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">security-role</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;<span class="name">role-name</span>&gt;</span>tomcat<span class="tag">&lt;/<span class="name">role-name</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">security-role</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>18、Web环境参数：env-entry元素声明Web应用的环境项   </p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;env-<span class="built_in">entry</span>&gt;   </div><div class="line">    &lt;env-<span class="built_in">entry</span>-<span class="keyword">name</span>&gt;minExemptions&lt;/env-<span class="built_in">entry</span>-<span class="keyword">name</span>&gt;   </div><div class="line">    &lt;env-<span class="built_in">entry</span>-<span class="keyword">value</span>&gt;<span class="number">1</span>&lt;/env-<span class="built_in">entry</span>-<span class="keyword">value</span>&gt;   </div><div class="line">    &lt;env-<span class="built_in">entry</span>-<span class="keyword">type</span>&gt;java.lang.<span class="keyword">Integer</span>&lt;/env-<span class="built_in">entry</span>-<span class="keyword">type</span>&gt;   </div><div class="line"> &lt;/env-<span class="built_in">entry</span>&gt;</div></pre></td></tr></table></figure>
+<p>19、EJB 声明   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ejb-ref</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;<span class="name">description</span>&gt;</span>Example EJB reference<span class="tag">&lt;/<span class="name">decription</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;<span class="name">ejb-ref-name</span>&gt;</span>ejb/Account<span class="tag">&lt;/<span class="name">ejb-ref-name</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;<span class="name">ejb-ref-type</span>&gt;</span>Entity<span class="tag">&lt;/<span class="name">ejb-ref-type</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;<span class="name">home</span>&gt;</span>com.mycompany.mypackage.AccountHome<span class="tag">&lt;/<span class="name">home</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;<span class="name">remote</span>&gt;</span>com.mycompany.mypackage.Account<span class="tag">&lt;/<span class="name">remote</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">ejb-ref</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>20、本地EJB声明   </p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;ejb-<span class="keyword">local</span>-<span class="keyword">ref</span>&gt;   </div><div class="line">     &lt;description&gt;Example Loacal EJB <span class="keyword">reference</span>&lt;/decription&gt;   </div><div class="line">     &lt;ejb-<span class="keyword">ref</span>-<span class="built_in">name</span>&gt;ejb/ProcessOrder&lt;/ejb-<span class="keyword">ref</span>-<span class="built_in">name</span>&gt;   </div><div class="line">     &lt;ejb-<span class="keyword">ref</span>-type&gt;Session&lt;/ejb-<span class="keyword">ref</span>-type&gt;   </div><div class="line">     &lt;<span class="keyword">local</span>-home&gt;com.mycompany.mypackage.ProcessOrderHome&lt;/<span class="keyword">local</span>-home&gt;   </div><div class="line">     &lt;<span class="keyword">local</span>&gt;com.mycompany.mypackage.ProcessOrder&lt;/<span class="keyword">local</span>&gt;   </div><div class="line">  &lt;/ejb-<span class="keyword">local</span>-<span class="keyword">ref</span>&gt;</div></pre></td></tr></table></figure>
+<p>21、配置DWR   </p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="params">&lt;servlet&gt;</span>   </div><div class="line">     <span class="params">&lt;servlet-name&gt;</span>dwr-invoker<span class="params">&lt;/servlet-name&gt;</span>   </div><div class="line">     <span class="params">&lt;servlet-class&gt;</span>uk.ltd.getahead.dwr.DWRServlet<span class="params">&lt;/servlet-class&gt;</span>   </div><div class="line"> <span class="params">&lt;/servlet&gt;</span>   </div><div class="line"> <span class="params">&lt;servlet-mapping&gt;</span>   </div><div class="line">     <span class="params">&lt;servlet-name&gt;</span>dwr-invoker<span class="params">&lt;/servlet-name&gt;</span>   </div><div class="line">     <span class="params">&lt;url-pattern&gt;</span><span class="meta-keyword">/dwr/</span>*<span class="params">&lt;/url-pattern&gt;</span>   </div><div class="line"> <span class="params">&lt;/servlet-mapping&gt;</span></div></pre></td></tr></table></figure>
+<p>22、配置Struts   </p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&lt;display-<span class="built_in">name</span>&gt;Struts Blank Application&lt;/display-<span class="built_in">name</span>&gt;   </div><div class="line">   &lt;servlet&gt;   </div><div class="line">       &lt;servlet-<span class="built_in">name</span>&gt;<span class="built_in">action</span>&lt;/servlet-<span class="built_in">name</span>&gt;   </div><div class="line">       &lt;servlet-class&gt;   </div><div class="line">           org.apache.struts.<span class="built_in">action</span>.ActionServlet   </div><div class="line">       &lt;/servlet-class&gt;   </div><div class="line">       &lt;init-<span class="built_in">param</span>&gt;   </div><div class="line">           &lt;<span class="built_in">param</span>-<span class="built_in">name</span>&gt;detail&lt;/<span class="built_in">param</span>-<span class="built_in">name</span>&gt;   </div><div class="line">           &lt;<span class="built_in">param</span>-value&gt;<span class="number">2</span>&lt;/<span class="built_in">param</span>-value&gt;   </div><div class="line">       &lt;/init-<span class="built_in">param</span>&gt;   </div><div class="line">       &lt;init-<span class="built_in">param</span>&gt;   </div><div class="line">           &lt;<span class="built_in">param</span>-<span class="built_in">name</span>&gt;debug&lt;/<span class="built_in">param</span>-<span class="built_in">name</span>&gt;   </div><div class="line">           &lt;<span class="built_in">param</span>-value&gt;<span class="number">2</span>&lt;/<span class="built_in">param</span>-value&gt;   </div><div class="line">       &lt;/init-<span class="built_in">param</span>&gt;   </div><div class="line">       &lt;init-<span class="built_in">param</span>&gt;   </div><div class="line">           &lt;<span class="built_in">param</span>-<span class="built_in">name</span>&gt;config&lt;/<span class="built_in">param</span>-<span class="built_in">name</span>&gt;   </div><div class="line">           &lt;<span class="built_in">param</span>-value&gt;/WEB-INF/struts-config.xml&lt;/<span class="built_in">param</span>-value&gt;   </div><div class="line">       &lt;/init-<span class="built_in">param</span>&gt;   </div><div class="line">       &lt;init-<span class="built_in">param</span>&gt;   </div><div class="line">           &lt;<span class="built_in">param</span>-<span class="built_in">name</span>&gt;application&lt;/<span class="built_in">param</span>-<span class="built_in">name</span>&gt;   </div><div class="line">           &lt;<span class="built_in">param</span>-value&gt;ApplicationResources&lt;/<span class="built_in">param</span>-value&gt;   </div><div class="line">       &lt;/init-<span class="built_in">param</span>&gt;   </div><div class="line">       &lt;<span class="built_in">load</span>-on-startup&gt;<span class="number">2</span>&lt;/<span class="built_in">load</span>-on-startup&gt;   </div><div class="line">   &lt;/servlet&gt;   </div><div class="line">   &lt;servlet-mapping&gt;   </div><div class="line">       &lt;servlet-<span class="built_in">name</span>&gt;<span class="built_in">action</span>&lt;/servlet-<span class="built_in">name</span>&gt;   </div><div class="line">       &lt;url-pattern&gt;*.<span class="keyword">do</span>&lt;/url-pattern&gt;   </div><div class="line">   &lt;/servlet-mapping&gt;   </div><div class="line">   &lt;welcome-file-<span class="built_in">list</span>&gt;   </div><div class="line">       &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;   </div><div class="line">   &lt;/welcome-file-<span class="built_in">list</span>&gt;</div></pre></td></tr></table></figure>
+<p>23、配置Spring（基本上都是在Struts中配置的）   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 指定spring配置文件位置 --&gt;</span>   </div><div class="line"> <span class="tag">&lt;<span class="name">context-param</span>&gt;</span>   </div><div class="line">    <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span>   </div><div class="line">    <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>   </div><div class="line">     <span class="comment">&lt;!--加载多个spring配置文件 --&gt;</span>   </div><div class="line">      /WEB-INF/applicationContext.xml, /WEB-INF/action-servlet.xml   </div><div class="line">    <span class="tag">&lt;/<span class="name">param-value</span>&gt;</span>   </div><div class="line"> <span class="tag">&lt;/<span class="name">context-param</span>&gt;</span>   </div><div class="line"></div><div class="line"> <span class="comment">&lt;!-- 定义SPRING监听器，加载spring --&gt;</span>   </div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">listener</span>&gt;</span>   </div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span>   </div><div class="line">   <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>   </div><div class="line">     org.springframework.web.context.request.RequestContextListener   </div><div class="line">   <span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span>   </div><div class="line"><span class="tag">&lt;/<span class="name">listener</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="三、映射规则"><a href="#三、映射规则" class="headerlink" title="三、映射规则"></a><strong>三、映射规则</strong></h3><p>当一个请求发送到servlet时，容器会根据当前的url减去context上下文后剩余的部分去匹配，比如请求地址为<a href="http://localhost/test/LoginServlet，我的应用上下文是test，容器会将http://localhost/test去掉，剩下的/LoginServlet部分拿来做servlet的映射匹配。这个映射匹配过程是有顺序的，而且当有一个servlet匹配成功以后，就不会去理会剩下的servlet了。" target="_blank" rel="external">http://localhost/test/LoginServlet，我的应用上下文是test，容器会将http://localhost/test去掉，剩下的/LoginServlet部分拿来做servlet的映射匹配。这个映射匹配过程是有顺序的，而且当有一个servlet匹配成功以后，就不会去理会剩下的servlet了。</a><br><strong>匹配规则</strong><br>1.精确路径匹配。例子：比如servletA 的url-pattern为 /test，servletB的url-pattern为 /<em> ，这个时候，如果我访问的url为<a href="http://localhost/test" target="_blank" rel="external">http://localhost/test</a> ，这个时候容器就会先 进行精确路径匹配，发现/test正好被servletA精确匹配，那么就去调用servletA，也不会去理会其他的servlet了。<br>2.最长路径匹配。例子：servletA的url-pattern为/test/</em>，而servletB的url-pattern为/test/a/<em>，此时访问<a href="http://localhost/test/a时，容器会选择路径最长的servlet来匹配，也就是这里的servletB。" target="_blank" rel="external">http://localhost/test/a时，容器会选择路径最长的servlet来匹配，也就是这里的servletB。</a><br>3.扩展匹配，如果url最后一段包含扩展，容器将会根据扩展选择合适的servlet。例子：servletA的url-pattern：</em>.action<br>以”/’开头和以”/<em>”结尾的是用来做路径映射的。以前缀”</em>.”开头的是用来做扩展映射的。所以，为什么定义”/*.action”<br>这样一个看起来很正常的匹配会错？因为这个匹配即属于路径映射，也属于扩展映射，导致容器无法判断。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/web开发/" rel="tag"># web开发</a>
+          
+            <a href="/tags/xml/" rel="tag"># xml</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/03/31/Hibernate概述和增删改查入门/" rel="next" title="Hibernate概述和增删改查入门">
+                <i class="fa fa-chevron-left"></i> Hibernate概述和增删改查入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/05/16/Spring Mvc入门/" rel="prev" title="Spring Mvc入门分析">
+                Spring Mvc入门分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2014/04/12/web.xml配置的元素加载顺序和详解/"
+     data-title="web.xml配置的元素加载顺序和详解"
+     data-content=""
+     data-url="http://hanyuanzhen.com/2014/04/12/web.xml配置的元素加载顺序和详解/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2014/04/12/web.xml配置的元素加载顺序和详解/"
+           data-title="web.xml配置的元素加载顺序和详解" data-url="http://hanyuanzhen.com/2014/04/12/web.xml配置的元素加载顺序和详解/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="HanYuanZhen" />
+          <p class="site-author-name" itemprop="name">HanYuanZhen</p>
+           
+              <p class="site-description motion-element" itemprop="description">韩元桢博客 技术博客 学习总结 思考感悟 知识管理</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="hyz115" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/hanyuanzhen" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、web-xml加载过程"><span class="nav-number">1.</span> <span class="nav-text">一、web.xml加载过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、web-xml各节点详细分析"><span class="nav-number">2.</span> <span class="nav-text">二、web.xml各节点详细分析:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、映射规则"><span class="nav-number"></span> <span class="nav-text">三、映射规则</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HanYuanZhen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hanyuanzhen"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

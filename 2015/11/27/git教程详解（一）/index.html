@@ -1,0 +1,866 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="git,版本管理," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="韩元桢博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="git是一个很好的分布式版本管理工具，在git中，版本库又叫仓库，英文名为repository，可以简单的理解为本地的一个目录，用git进行管理，目录内的文件git进行删除，修改等操作时，git都可以跟踪，从而记录仓库的操作历史。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git教程详解（一）">
+<meta property="og:url" content="http://hanyuanzhen.com/2015/11/27/git教程详解（一）/index.html">
+<meta property="og:site_name" content="韩元桢博客">
+<meta property="og:description" content="git是一个很好的分布式版本管理工具，在git中，版本库又叫仓库，英文名为repository，可以简单的理解为本地的一个目录，用git进行管理，目录内的文件git进行删除，修改等操作时，git都可以跟踪，从而记录仓库的操作历史。">
+<meta property="og:image" content="http://img.blog.csdn.net/20151127202612430">
+<meta property="og:image" content="http://img.blog.csdn.net/20151127203423789">
+<meta property="og:image" content="http://img.blog.csdn.net/20151127203653884">
+<meta property="og:image" content="http://img.blog.csdn.net/20151127203849320">
+<meta property="og:image" content="http://img.blog.csdn.net/20151127204002038">
+<meta property="og:updated_time" content="2017-03-11T13:10:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git教程详解（一）">
+<meta name="twitter:description" content="git是一个很好的分布式版本管理工具，在git中，版本库又叫仓库，英文名为repository，可以简单的理解为本地的一个目录，用git进行管理，目录内的文件git进行删除，修改等操作时，git都可以跟踪，从而记录仓库的操作历史。">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20151127202612430">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hanyuanzhen.com/2015/11/27/git教程详解（一）/"/>
+
+
+
+
+
+  <title> git教程详解（一） | 韩元桢博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?342455f7213d6823f6fb04e6524cf764";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">韩元桢博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">程序猿，创客，水瓶座</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '8nZVu5iST4G6rUN7-3Tx','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://hanyuanzhen.com/2015/11/27/git教程详解（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HanYuanZhen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩元桢博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                git教程详解（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-27T15:47:17+08:00">
+                2015-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git教程/" itemprop="url" rel="index">
+                    <span itemprop="name">git教程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/27/git教程详解（一）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/27/git教程详解（一）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>git是一个很好的分布式版本管理工具，在git中，版本库又叫仓库，英文名为repository，可以简单的理解为本地的一个目录，用git进行管理，目录内的文件git进行删除，修改等操作时，git都可以跟踪，从而记录仓库的操作历史。<br><a id="more"></a></p>
+<h4 id="一、git简介"><a href="#一、git简介" class="headerlink" title="一、git简介"></a><strong>一、git简介</strong></h4><p>git中，版本库又叫仓库，英文名为repository，可以简单的理解为本地的一个目录，用git进行管理，目录内的文件git进行删除，修改等操作时，git都可以跟踪，从而记录仓库的操作历史。</p>
+<h3 id="二、创建仓库"><a href="#二、创建仓库" class="headerlink" title="二、创建仓库"></a><strong>二、创建仓库</strong></h3><p>在本地创建一个目录，如/user/temp/test/，然后在此目录下执行git init，就可将目录变成git管理的仓库。<br><img src="http://img.blog.csdn.net/20151127202612430" alt="这里写图片描述"><br>执行完后，是一个空仓库，包含一个隐藏的.git目录，若没看到该目录，linux上可以用 ls -ah 查看.<br><strong>(1).将文件添加到版本库</strong><br>所有的版本控制系统，其实只能跟踪文本文件的改动，比如TXT文件，网页，所有的程序代码等等，Git也不例外。版本控制系统可以告诉你每次的改动，比如在第5行加了一个单词“Linux”，在第8行删了一个单词“Windows”。而图片、视频这些二进制文件，虽然也能由版本控制系统管理，但没法跟踪文件的变化，<br>只能把二进制文件每次改动串起来，也就是只知道图片从100KB改成了120KB，但到底改了啥，版本控制系统不知道，也没法知道    。<br>1.现在在test目录或其子目录下添加一个readme.txt ,将该文件放到git仓库方式如下:<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">add</span><span class="bash"> readme.text</span></div><div class="line">git commit -m <span class="string">"add new file"</span></div></pre></td></tr></table></figure></p>
+<p>上述命令中 -m 为本次提交的注释，是为了方便他人查看，所以需要加上。<br>2.若git想批量添加文件，可以将多个文件用逗号分隔，然后commit。<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">add</span><span class="bash"> <span class="built_in">test</span>1.txt <span class="built_in">test</span>2.txt</span></div><div class="line">git commit -m <span class="string">"add new file"</span></div></pre></td></tr></table></figure></p>
+<p><strong>(2).查看仓库的状态</strong><br>git status命令可以让我们时刻掌握仓库当前的状态。如图:</p>
+<p>上面的命令告诉我们，readme.txt被修改过了，但还没有准备提交的修改。<br>git diff可以告诉我们修改了什么内容。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">git</span> <span class="selector-tag">diff</span> <span class="selector-tag">readme</span><span class="selector-class">.txt</span></div></pre></td></tr></table></figure></p>
+<p><strong>(3).版本回退</strong><br>git会将修改的文件保存一个快照，一旦你把文件修改乱了或误删除文件，可以从最近的快照恢复，而不影响工作。</p>
+<ul>
+<li><p>git log 查看版本控制系统的修改记录<br> <img src="http://img.blog.csdn.net/20151127203423789" alt="这里写图片描述"><br> git log命令显示从最近到最远的提交日志，上述操作我们可以看到有2次提交，每次提交后，都会有一个commit Id(版本号).</p>
+</li>
+<li><p>git reset 回退版本</p>
+<p> Git必须知道当前版本是哪个版本，在Git中，用HEAD表示当前版本，上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。<br>git reset – hard HEAD^ 比如要将当前版本回退到上一个版本 ,HEAD^也可换成版本号.</p>
+</li>
+<li><p>git reflog 恢复版本</p>
+<p> 当你用 $ git reset –hard HEAD^</p>
+<p> 回退到上一个版本时，再想恢复回来，就必须找到恢复版本的commit id。Git提供了一个命令git reflog用来记录你的每一次命令：git reflog<br> <img src="http://img.blog.csdn.net/20151127203653884" alt="这里写图片描述"><br><strong>(4)删除文件</strong><br>1.一般情况下，你通常直接在文件管理器中把没用的文件删了，或者用rm命令删了  $ rm test.txt<br>2.git rm file 从版本库删除该文件，并且git commit<br>3.git checkout – test.txt 用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。</p>
+</li>
+</ul>
+<h3 id="三、远程仓库"><a href="#三、远程仓库" class="headerlink" title="三、远程仓库"></a><strong>三、远程仓库</strong></h3><p>远程仓库可以是在一台运行git的服务器上创建一个的仓库。类似网站如gitcafe ,github等都可进行仓库的托管。只要注册一个账号，可以获得免费的远程仓库。<br>由于在github上，你本地仓库和远程仓库的传输是通过ssh加密的。所以需要进行如下设置:<br>1.创建SSH key<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">ssh-keygen</span> <span class="selector-tag">-t</span> <span class="selector-tag">rsa</span> <span class="selector-tag">-C</span> "***********@<span class="keyword">163</span>.<span class="keyword">com</span>"</div></pre></td></tr></table></figure></p>
+<p>创建成功后，可以在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人。<br>2.登录github，配置ssh key ，如图所示:</p>
+<p><img src="http://img.blog.csdn.net/20151127203849320" alt="这里写图片描述"></p>
+<p>图中的Title任意填上，在Key文本框里粘贴id_rsa.pub文件的内容。<br>github 支持添加多个不同的key,假定你有若干电脑，你一会儿在公司提交，一会儿在家里提交，只要把每台电脑的Key都添加到GitHub，就可以在每台电脑上往GitHub推送了.<br><strong>(1)、添加仓库</strong><br>在上面操作配置好ssh key 后，就可以创建远程git仓库了，在github上，在右上角找到“Create a new repo”按钮，创建一个新的仓库。如图所示<br><img src="http://img.blog.csdn.net/20151127204002038" alt="这里写图片描述"></p>
+<p>创建好仓库后，需要和你本地的仓库进行关联，然后把本地的内容push到远程仓库中，则你需要在的本地库目录下，执行如下操作:<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git remote <span class="keyword">add</span><span class="bash"> origin git@github.com:igreek/Timber.git</span></div></pre></td></tr></table></figure></p>
+<p>执行后，你的远程库为origin。但此时还是没有内容，若把关联的本地库的内容push到origin上，则需要执行如下操作:</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">push</span> -u <span class="built_in">origin</span> master</div></pre></td></tr></table></figure>
+<p>参数-u:第一次push时需要，以后可以省略。<br>推送成功后，可以立刻在GitHub页面中看到远程库的内容已经和本地一模一样。</p>
+<p><strong>(2)、从远程库克隆</strong><br>假如没有在本地创建仓库，在远程创建了一个仓库，想把远程仓库的内容克隆到本地的一个目录下。可以执行如下操作:<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">clone</span> <span class="title">origin</span> git@github.com:igreek/Timber.git</div></pre></td></tr></table></figure></p>
+<p>从上面的操作都是使用ssh协议，其实也可以其他的https协议，但它速度有些慢，端口有限制。</p>
+<p>总结:本篇主要介绍了git的作用，git 与其他版本工具的一些差异，git的创建仓库以及如何管理仓库等功能，涉及到一些git命令需要熟悉，git也是一个很实用的分布式系统，下篇将介绍git的分支管理。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+            <a href="/tags/版本管理/" rel="tag"># 版本管理</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/24/核心java系列——异常处理机制/" rel="next" title="核心java系列——异常处理机制">
+                <i class="fa fa-chevron-left"></i> 核心java系列——异常处理机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/06/Android之数据存储（一）/" rel="prev" title="Android之数据存储（一）">
+                Android之数据存储（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/11/27/git教程详解（一）/"
+     data-title="git教程详解（一）"
+     data-content=""
+     data-url="http://hanyuanzhen.com/2015/11/27/git教程详解（一）/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/11/27/git教程详解（一）/"
+           data-title="git教程详解（一）" data-url="http://hanyuanzhen.com/2015/11/27/git教程详解（一）/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="HanYuanZhen" />
+          <p class="site-author-name" itemprop="name">HanYuanZhen</p>
+           
+              <p class="site-description motion-element" itemprop="description">韩元桢博客 技术博客 学习总结 思考感悟 知识管理</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="hyz115" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/hanyuanzhen" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、git简介"><span class="nav-number">1.</span> <span class="nav-text">一、git简介</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、创建仓库"><span class="nav-number"></span> <span class="nav-text">二、创建仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、远程仓库"><span class="nav-number"></span> <span class="nav-text">三、远程仓库</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HanYuanZhen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hanyuanzhen"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

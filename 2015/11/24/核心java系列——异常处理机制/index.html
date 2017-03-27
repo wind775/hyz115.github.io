@@ -1,0 +1,848 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="韩元桢博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="核心java系列——异常处理机制">
+<meta property="og:url" content="http://hanyuanzhen.com/2015/11/24/核心java系列——异常处理机制/index.html">
+<meta property="og:site_name" content="韩元桢博客">
+<meta property="og:description" content="异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。">
+<meta property="og:image" content="http://img.blog.csdn.net/20151124185612756">
+<meta property="og:updated_time" content="2017-03-11T13:10:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="核心java系列——异常处理机制">
+<meta name="twitter:description" content="异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20151124185612756">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hanyuanzhen.com/2015/11/24/核心java系列——异常处理机制/"/>
+
+
+
+
+
+  <title> 核心java系列——异常处理机制 | 韩元桢博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?342455f7213d6823f6fb04e6524cf764";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">韩元桢博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">程序猿，创客，水瓶座</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '8nZVu5iST4G6rUN7-3Tx','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://hanyuanzhen.com/2015/11/24/核心java系列——异常处理机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HanYuanZhen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩元桢博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                核心java系列——异常处理机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-24T15:47:17+08:00">
+                2015-11-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/核心java/" itemprop="url" rel="index">
+                    <span itemprop="name">核心java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/24/核心java系列——异常处理机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/24/核心java系列——异常处理机制/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。<br><a id="more"></a></p>
+<h3 id="一、什么是异常"><a href="#一、什么是异常" class="headerlink" title="一、什么是异常"></a><strong>一、什么是异常</strong></h3><blockquote>
+<p>异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。</p>
+</blockquote>
+<p>####（1）.异常分类<br>java语言中，定义了许多的异常类，所有异常类都派生Throwable类，而Throwable类又有两个子类Error和Exception，分别表示错误和异常，<br>其中Exception又分为运行时异常和非运行时异常。下面为异常的体系结构图：<br><img src="http://img.blog.csdn.net/20151124185612756" alt="这里写图片描述"></p>
+<p>####（2）.下面将详细说明图中相关异常的区别和联系<br><strong>1.Error和Exception</strong><br>  Error是程序无法处理的错误，通常有内存溢出异常(outofMemoryError)，线程终止等，出现这类异常java虚拟机会选择终止程序。<br> Exception是程序可处理的异常，它又有两个分支运行时异常和非运行时异常，出现这类异常是程序需要处理。<br><strong>2.运行时异常和非运行时异常</strong><br> 运行时异常都是RuntimeException类及其子类异常，如NullPointerException、 IndexOutOfBoundsException等，这些异常是不检查异常，程序中可以选择捕获处理，也可以不处理。这些异常一般是由程序逻辑错误引 起的，程序应该从逻辑角度尽可能避免这类异常的发生。<br> 非运行时异常是RuntimeException以外的异常，类型上都属于Exception类及其子类。从程序语法角度讲是必须进行处理的异常，<br>如果不处理，程序就不能编译通过。如IOException、SQLException等以及用户自定义的Exception异常。</p>
+<h4 id="3-什么时候抛出异常"><a href="#3-什么时候抛出异常" class="headerlink" title="(3).什么时候抛出异常"></a>(3).什么时候抛出异常</h4><p>如果遇到无法处理的问题时，该方法可以选择抛出异常，至于何时需要在方法中用throws声明异常，若该方法需要抛出多个异常，则每个异常间用逗号分隔，通常有以下情况需要抛出异常：<br>1.调用一个已抛出异常的方法，如FileInputStream构造器。<br>2.程序运行过程错误，并用throw抛出一个检查出的异常。<br>3.程序出现错误。<br>4.java虚拟机和运行时库出现的内部异常。<br>总之一个方法必须声明所有可能抛出的异常已检查异常，所有未检查出的异常要么不可控制，要么就应该避免发生。</p>
+<h4 id="4-创建异常"><a href="#4-创建异常" class="headerlink" title="(4).创建异常"></a>(4).创建异常</h4><p>创建异常通常只需要定义派生于Exception类或派生于Exception子类的类。例如定义一个派生于IOException的类，通常定义两个构造器，一个是默认构造器，一个是带有详细描述信息的构造器。如:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyExcetion</span> <span class="keyword">extends</span> <span class="title">IOException</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyExcetion</span><span class="params">()</span> </span>&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyExcetion</span><span class="params">(String message)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(message);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyExcetion</span><span class="params">(Throwable cause)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(cause);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyExcetion</span><span class="params">(String message, Throwable cause)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(message, cause);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="二、异常处理"><a href="#二、异常处理" class="headerlink" title="二、异常处理"></a><strong>二、异常处理</strong></h3><p>程序运行过程中，若出现异常没有及时处理，则会终止程序的执行。可以用捕获异常或抛出异常来处理。<br>若try语句代码块出现异常，程序会在catch中寻找匹配的异常，然后调用匹配的异常处理器进行处理。运行过程中程序未找到匹配的异常处理器，程序就会终止。<br><strong>(1).try…catch模式</strong><br>该模式的定义形式如下<br>try{<br>  代码块；<br>  }catch(Exception e){<br>  }<br>  Catch(Exception e2){ }</p>
+<p>匹配的原则是：如果抛出的异常对象属于catch子句的异常类，或者属于该异常类的子类，则认为生成的异常对象与catch块捕获的异常类型相匹。<br><strong>(2).try…catch…finally模式</strong><br>该模包含finally,无论程序有无异常发生，且不管try –catch间是否顺利执行，都会执行finally语句。<br><strong>(3).实例说明：</strong><br>1.各模块的作用<br>try块:用于捕获异常，后面可以跟一个或多个catch，finally可有可无，但必须有一个catch块。<br>catch块:用于处理异常。<br>finally块是程序是否有无异常，都需要执行的部分。<br>但在以下3中特殊情况下不会执行：<br>A．在finally 语句中发生异常。<br>B．程序所在线程死亡。<br>C．在前面的代码中出现了system.exit()退出程序。<br>2.当捕获到一个异常对象之后，你可以调用其getMessage()方法来获取异常消息，或者调用printStackTrace()方法来打印执行栈的内容<br>关于getMessage()方法<br>当你通过new Exception(“message”)或new RuntimeException(“message”)来创建一个异常对象的时候，传给构造方法的这个参数就是消息，所以，当你捕获到异常对象之后，可以通过getMessage()方法把消息拿出来！<br>关于printStackTrace()方法它能把执行栈的内容打印出来</p>
+<h3 id="三、异常的转换"><a href="#三、异常的转换" class="headerlink" title="三、异常的转换"></a><strong>三、异常的转换</strong></h3><p>所谓异常转换，即截获一个异常（往往是checked exception）之后，将其转换为另外一个异常（往往是unchecked exception）抛出。<br>比如很多情况下，当我们操作数据库的时候或操作文件的时候，JDK类库中的相关操作方法会给我们抛出SQLException或IOException，这些都是checked exception，这些异常一般情况下我们是无法进行处理的，所以，我们需要继续向上抛出异常，假如我们继续抛出SQLException或IOException的话，会导致更上层的程序处理起来非常困难（而且也需要在方法中进行声明）。<br>因此，大多数情况下，我们在截获到SQLException或IOException之后，会将它转换为一种RuntimeException重新抛出，这是非常常见的异常应用技巧！</p>
+<h3 id="四、异常链"><a href="#四、异常链" class="headerlink" title="四、异常链"></a><strong>四、异常链</strong></h3><p>所谓异常链，即当我们在截获一个异常，在把它转换为另外一个异常的时候，记得把原来那个异常对象设置到新的异常对象中即可。我们不妨观察Throwable类（所有异常类的基类）的构造方法:<br>public Throwable()<br>public Throwable(String message)<br>public Throwable(String message, Throwable cause)<br>public Throwable(Throwable cause)<br>我们注意到其中的Throwable类型的参数，它就是用来创建异常链的。<br>下面使用一个实例来说明:<br><strong>1.自定义异常类：</strong></p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword"><span class="keyword">extends</span> <span class="type">RuntimeException</span></span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> final long serialVersionUID = <span class="number">1</span>L;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> errorCode;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> MyException() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> MyException(<span class="keyword">String</span> message,<span class="keyword">String</span> errorCode) &#123;</div><div class="line">		<span class="keyword">super</span>(message);</div><div class="line">		<span class="built_in">this</span>.errorCode=errorCode;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//用于创建异常链</span></div><div class="line">	<span class="keyword">public</span> MyException(<span class="keyword">String</span> message,<span class="keyword">String</span> errorCode,Throwable cause) &#123;</div><div class="line">		<span class="keyword">super</span>(message, cause);</div><div class="line">		<span class="built_in">this</span>.errorCode=errorCode;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">String</span> getErrorCode() &#123;</div><div class="line">		<span class="keyword">return</span> errorCode;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>2.调用该类</strong></p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUtils</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> readFile(<span class="keyword">String</span> filePath)&#123;</div><div class="line">		StringBuffer sb=<span class="keyword">new</span> <span class="type">StringBuffer</span>();</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			BufferedReader reader=<span class="keyword">new</span> <span class="type">BufferedReader</span>(<span class="keyword">new</span> <span class="type">FileReader</span>(filePath));</div><div class="line">			<span class="keyword">String</span> line=<span class="literal">null</span>;</div><div class="line">			<span class="keyword">while</span>((line=reader.readLine())!=<span class="literal">null</span>)&#123;</div><div class="line">				sb.append(line);</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</div><div class="line">			<span class="comment">//将原始对象放到新对象中去</span></div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">MyException</span>(<span class="string">"文件没有找到！"</span>, <span class="string">"1"</span>, e);</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">MyException</span>(<span class="string">"文件读取有误！"</span>, <span class="string">"2"</span>, e);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> sb.toString();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="五、注意事项"><a href="#五、注意事项" class="headerlink" title="五、注意事项"></a><strong>五、注意事项</strong></h3><p>1)  必须在 try 之后添加 catch 或 finally 块。try 块后可同时接 catch 和 finally 块，但至少有一个块。<br>2) 必须遵循块顺序：若代码同时使用 catch 和 finally 块，则必须将 catch 块放在 try 块之后。<br>3) 一个 try 块可能有多个 catch 块。若如此，则执行第一个匹配块<br>即Java虚拟机会把实际抛出的异常对象依次和各个catch代码块声明的异常类型匹配，如果异常对象为某个异常类型或其子类的实例，就执行这个catch代码块，不会再执行其他的 catch代码块。<br>4) 可嵌套 try-catch-finally 结构。<br>5) 在 try-catch-finally 结构中，可重新抛出异常。<br>6)多个catch的顺序一定要遵循子类在上父类在下的规则。<br>7)一个方法被重写，被重写的方法必须抛出相同的异常或异常的子类。<br>8)若父类方法抛出多个异常，那子类重写该方法必须抛出哪些异常的一个子集。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/24/核心java系列——I-O流详解(一)/" rel="next" title="核心java系列——I/O流详解（一）">
+                <i class="fa fa-chevron-left"></i> 核心java系列——I/O流详解（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/27/git教程详解（一）/" rel="prev" title="git教程详解（一）">
+                git教程详解（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/11/24/核心java系列——异常处理机制/"
+     data-title="核心java系列——异常处理机制"
+     data-content=""
+     data-url="http://hanyuanzhen.com/2015/11/24/核心java系列——异常处理机制/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/11/24/核心java系列——异常处理机制/"
+           data-title="核心java系列——异常处理机制" data-url="http://hanyuanzhen.com/2015/11/24/核心java系列——异常处理机制/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="HanYuanZhen" />
+          <p class="site-author-name" itemprop="name">HanYuanZhen</p>
+           
+              <p class="site-description motion-element" itemprop="description">韩元桢博客 技术博客 学习总结 思考感悟 知识管理</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="hyz115" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/hanyuanzhen" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、什么是异常"><span class="nav-number">1.</span> <span class="nav-text">一、什么是异常</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-什么时候抛出异常"><span class="nav-number">1.1.</span> <span class="nav-text">(3).什么时候抛出异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-创建异常"><span class="nav-number">1.2.</span> <span class="nav-text">(4).创建异常</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、异常处理"><span class="nav-number">2.</span> <span class="nav-text">二、异常处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、异常的转换"><span class="nav-number">3.</span> <span class="nav-text">三、异常的转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、异常链"><span class="nav-number">4.</span> <span class="nav-text">四、异常链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、注意事项"><span class="nav-number">5.</span> <span class="nav-text">五、注意事项</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HanYuanZhen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hanyuanzhen"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

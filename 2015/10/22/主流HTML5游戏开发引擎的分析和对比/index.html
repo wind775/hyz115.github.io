@@ -1,0 +1,941 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="HTML5,游戏引擎," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="韩元桢博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="HTML 5是近十年来Web开发标准最巨大的飞跃。和以前的版本不同，HTML 5并非仅仅用来表示Web内容，它的新使命是将Web带入一个成熟的应用平台，在HTML 5平台上，视频，音频，图象，动画，以及同电脑的交互都被标准化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="主流HTML5游戏开发引擎的分析和对比">
+<meta property="og:url" content="http://hanyuanzhen.com/2015/10/22/主流HTML5游戏开发引擎的分析和对比/index.html">
+<meta property="og:site_name" content="韩元桢博客">
+<meta property="og:description" content="HTML 5是近十年来Web开发标准最巨大的飞跃。和以前的版本不同，HTML 5并非仅仅用来表示Web内容，它的新使命是将Web带入一个成熟的应用平台，在HTML 5平台上，视频，音频，图象，动画，以及同电脑的交互都被标准化">
+<meta property="og:updated_time" content="2017-03-11T13:10:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="主流HTML5游戏开发引擎的分析和对比">
+<meta name="twitter:description" content="HTML 5是近十年来Web开发标准最巨大的飞跃。和以前的版本不同，HTML 5并非仅仅用来表示Web内容，它的新使命是将Web带入一个成熟的应用平台，在HTML 5平台上，视频，音频，图象，动画，以及同电脑的交互都被标准化">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hanyuanzhen.com/2015/10/22/主流HTML5游戏开发引擎的分析和对比/"/>
+
+
+
+
+
+  <title> 主流HTML5游戏开发引擎的分析和对比 | 韩元桢博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?342455f7213d6823f6fb04e6524cf764";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">韩元桢博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">程序猿，创客，水瓶座</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '8nZVu5iST4G6rUN7-3Tx','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://hanyuanzhen.com/2015/10/22/主流HTML5游戏开发引擎的分析和对比/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="HanYuanZhen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="韩元桢博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                主流HTML5游戏开发引擎的分析和对比
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-10-22T15:47:17+08:00">
+                2015-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTML5开发/" itemprop="url" rel="index">
+                    <span itemprop="name">HTML5开发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/10/22/主流HTML5游戏开发引擎的分析和对比/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/22/主流HTML5游戏开发引擎的分析和对比/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>HTML 5是近十年来Web开发标准最巨大的飞跃。和以前的版本不同，HTML 5并非仅仅用来表示Web内容，它的新使命是将Web带入一个成熟的应用平台，在HTML 5平台上，视频，音频，图象，动画，以及同电脑的交互都被标准化<br><a id="more"></a></p>
+<h2 id="一、引擎说明"><a href="#一、引擎说明" class="headerlink" title="一、引擎说明"></a>一、引擎说明</h2><p>本文主要选取了Construct2、ImactJS、LimeJS、GameMaker、CreateJS、lycheeJS、Crafty、three.js、melonJS、Turbulenz、Quintus、Cocos2d-html5等进行了简要介绍和对比，主要是根据网上的资料整理而成。<br>主流框架对比</p>
+<h3 id="Construct2"><a href="#Construct2" class="headerlink" title="Construct2"></a>Construct2</h3><p>Construct 2是一个运行于Windows平台的游戏制作工具，它可以让没有任何编程基础的用户在短时间内不写一行代码快速开发出一款可运行于所有平台（Windows、Mac、Linux、Android、iOS等）的游戏。免费版可以将游戏导出成HTML5。收费版本分为个人版（79英镑）和企业版（259英镑），可以导出所有平台的版本，同时提供了更多的特效和音乐。如果使用该工具盈利超过5000美元，需要升级到企业版。</p>
+<p>优点：</p>
+<ol>
+<li>简单易用，可实时运行游戏</li>
+<li>强大的事件系统，可以不通过写代码来控制游戏逻辑</li>
+<li>提供了可编程扩展的接口</li>
+<li>提供了大量特效，支持物理效果</li>
+<li>支持所有平台</li>
+<li>完整的文档以及社区支持</li>
+</ol>
+<p>缺点：<br>不如直接写代码灵活</p>
+<p>参考资料：</p>
+<ol>
+<li>官方网站</li>
+<li>Construct 2 vs. Javascript</li>
+</ol>
+<h3 id="ImpactJS"><a href="#ImpactJS" class="headerlink" title="ImpactJS"></a>ImpactJS</h3><p>ImpactJS是一个基于JavaScript的HTML5游戏引擎，同时支持PC和移动平台浏览器。它是目前除了Construct2之外最受欢迎的HTML5游戏引擎，使用需要支付99美元。</p>
+<p>优点：</p>
+<ol>
+<li>提供了灵活的关卡编辑器，可以快速构建游戏地图</li>
+<li>提供了强大的调试工具</li>
+<li>提供了Ejecta可以将JavaScript的执行结果通过OpenGL渲染出来，可以在iOS平台上获得与原生应用相近的效率</li>
+<li>文档齐全，有两本专门介绍ImpactJS开发的书</li>
+<li>支持物理效果</li>
+<li>支持自己编写插件来扩展</li>
+</ol>
+<p>App Store游戏</p>
+<ol>
+<li>Biolab Disaster</li>
+<li>Drop JS</li>
+</ol>
+<h3 id="LimeJS"><a href="#LimeJS" class="headerlink" title="LimeJS"></a>LimeJS</h3><p>LimeJS是一个基于Google Closure Library开发的HTML5游戏框架，继承了Closure代码易读易懂、架构清楚的特性。同时提供了游戏中各种通用实体的封装，如Director、Scene、Layer、Event和Animation等，与Cocos2d的API类似。它是由Digital Fruit公司创建。</p>
+<p>优点：</p>
+<ol>
+<li>基于Apache协议的开源框架</li>
+<li>功能强大，文档齐全，与ImactJS类似</li>
+<li>支持物理效果</li>
+<li>与Cocos2d的API类似，容易上手</li>
+</ol>
+<p>缺点：<br>依赖于Google Closure</p>
+<h3 id="GameMaker"><a href="#GameMaker" class="headerlink" title="GameMaker"></a>GameMaker</h3><p>GameMaker与Construct 2类似，都是一个游戏制作工具，可以导出到各个平台运行，分为免费版、标准版（49.99美元）、专业版（99.99美元）和大师版（799.99美元）。其中免费版只能导出Mac和Windows版本，导出HTML5需要大师版或者专业版（再额外支付99.99美元）。</p>
+<p>优点和缺点：<br>优势与Construct2类似，但性价比不如Construct2高</p>
+<h3 id="CreateJS-EaselJS"><a href="#CreateJS-EaselJS" class="headerlink" title="CreateJS(EaselJS)"></a>CreateJS(EaselJS)</h3><p>CreateJS是Adobe官方赞助的开源开发框架，它大部分API都是基于Flash原有的API来模仿实现的，并且官方提供了直接把Flash动画转成JS数据包的工具，调用起来很方便。CreateJS提供了若干开发套件及工具，分别是：EaselJS（负责图形、事件、触控、滤镜等功能）、TweenJS（补间动画）、SoundJS（音频控制）、PreloadJS（文件加载）和Zoë（生成图片精灵及动画数据）。</p>
+<p>优点：</p>
+<ol>
+<li>Flash开发者很容易上手</li>
+<li>提供了Flash转html5的工具，可以将部分Flash代码进行转换再修改</li>
+<li>基于MIT协议的开源框架</li>
+<li>类库设计非常独立，包含不同的模块，可选择性使用</li>
+</ol>
+<h3 id="lycheeJS"><a href="#lycheeJS" class="headerlink" title="lycheeJS"></a>lycheeJS</h3><p>lycheeJS是一个环境独立的JavaScript游戏引擎，可以在任何支持JavaScript的环境中运行。它的理念是做最快的JavaScript游戏引擎。</p>
+<p>优点：</p>
+<ol>
+<li>同时支持PC（Firefox、Chrome、Opera、Safari、IE）和移动平台（WebKit、Chrome、Firefox、Safari）的浏览器</li>
+<li>提供了CDN、WebSockets、SPDY、HTTP2.0以及游戏截图的支持</li>
+<li>提供了可以直接导出第三方（Facebook、AppStore、Google Play Store）资源包来发布</li>
+<li>基于MIT协议的开源框架</li>
+</ol>
+<h3 id="Crafty"><a href="#Crafty" class="headerlink" title="Crafty"></a>Crafty</h3><p>Crafty是一个体积小、简单、轻量级的2D的HTML5游戏引擎，它提供了通过Canvas或DOM来绘制实体，提供了精灵Map以及SAT高级碰撞监测支持。它是由个人（Louis Stowasser）创建，同时由Github上的一些开发者共同开发。</p>
+<p>优点</p>
+<ol>
+<li>体积小</li>
+<li>轻量级引擎，不会受到框架的太多束缚</li>
+<li>同时支持PC和移动平台浏览器</li>
+</ol>
+<h3 id="three-js"><a href="#three-js" class="headerlink" title="three.js"></a>three.js</h3><p>Three.js是一个轻量级的JavaScript库，用于在浏览器上创建和显示3D图形。它可以同时使用Canvas、SVG或WebGL进行绘制。</p>
+<p>优点和缺点：<br>支持3D，但是不适合做2D游戏</p>
+<h3 id="melonJS"><a href="#melonJS" class="headerlink" title="melonJS"></a>melonJS</h3><p>melonJS是melonJS团队对Javascript热情以及开发经验的结晶，是一个简单、免费、而且独立的类库。</p>
+<p>优点</p>
+<ol>
+<li>轻量级的2D引擎</li>
+<li>支持所有主流的PC和移动平台浏览器</li>
+<li>支持使用Tiled map editor来创建和编辑地图</li>
+<li>支持多声道音频</li>
+<li>基于MIT协议的开源框架</li>
+</ol>
+<h3 id="Turbulenz"><a href="#Turbulenz" class="headerlink" title="Turbulenz"></a>Turbulenz</h3><p>Turbulenz是一个开源的HTML5游戏引擎，提供了可以运行在Windows、MacOS、Linux上的SDK，允许开发人员创建高质量和硬件加速的2D、3D游戏。包括以下功能：异步资源加载、进行特效和粒子渲染、支持物理效果、碰撞检测以及动画、3D音效支持、支持网络交互以及社交网络分享、场景和资源的管理。</p>
+<p>优点：</p>
+<ol>
+<li>功能强大，同时支持2D和3D</li>
+<li>基于MIT协议的开源引擎</li>
+</ol>
+<h3 id="Quintus"><a href="#Quintus" class="headerlink" title="Quintus"></a>Quintus</h3><p>Quintus是一个容易上手、轻量级、且模块化的HTML5游戏引擎。它引用面向对象的思想来进行HTML5游戏开发，同时依赖于jQuery来提供事件处理机制和元素选取操作。</p>
+<p>缺点</p>
+<ol>
+<li>依赖于jQuery</li>
+<li>目前引擎仍处于初级阶段，还很不成熟</li>
+</ol>
+<h3 id="Cocos2d-html5"><a href="#Cocos2d-html5" class="headerlink" title="Cocos2d-html5"></a>Cocos2d-html5</h3><p>Cocos2d-html5是一款基于Cocos2d-x API的2D开源免费HTML5游戏引擎。它目前通过canvas进行渲染，将来会支持WebGL。它由国内Cocos2d-x核心团队主导开发和维护，行业领袖、HTML5大力推动者Google为这个项目提供支持。同时，Zynga、Google等大公司的工程师也参与到它的设计工作中。</p>
+<p>优点：</p>
+<ol>
+<li>与Cocos2d的API类似，容易上手</li>
+<li>中文文档齐全，资料丰富</li>
+<li>基于MIT协议的开源引擎</li>
+</ol>
+<h2 id="二、各框架具体参数对比"><a href="#二、各框架具体参数对比" class="headerlink" title="二、各框架具体参数对比"></a>二、各框架具体参数对比</h2><ol>
+<li>各HTML5游戏框架对比HTML5 Game Engines</li>
+<li>List of JS Game Engines</li>
+<li>对于Crafty、Lime、Frozen、Melon、Impact、Quintus框架，可以在Breakouts上查看用这些引擎开发同一个游戏的效果以及代码风格。Breakouts中使用到的特性包括碰撞检测、精灵动画、音效、地图、场景切换、交互、文字渲染、移动平台支持。</li>
+<li>以上各引擎中，除了Construct2、ImpactJS、GameMaker是收费的之外，其他引擎都是免费并且开源的。对于开源引擎，我们可以从Github上面的关注度了解到该引擎的流行程度，关注的人越多，遇到问题越容易解决。同时一般来说，项目开发者越多，版本更新越快；项目的进行时间越长则越成熟。下面将对各开源引擎的开发者人数、项目启动时间、关注度进行对比。<br>Game Engine    Github commits    Github contributors    Start time    Github Star    Github Fork<br>LimeJS    532    22    2011.1.19    1091    187<br>EaselJS    784    15    2011.1.23    2758    650<br>lycheeJS    4    1    2012.9.5    110    20<br>Crafty    1182    67    2010.11.5    993    225<br>three.js    6409    198    2010.3.23    12691    2816<br>melonJS    1287    15    2011.4.11    643    137<br>Turbulenz    736    12    2013.4.26（最近才开源）    1522    207<br>Quintus    118    11    2012.8.4    450    89<br>Cocos2d-html5    2706    39    2012.1.28    735    303</li>
+</ol>
+<h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h2><p>以上各引擎中，Construct2、ImpactJS、GameMaker三个是收费的，其中Construct2与GameMaker更像一个游戏开发工具，可以实现不用写一行代码来制作游戏，更适合于没有编程基础的人使用。而ImpactJS作为一个高质量的框架，且易于扩展，虽然是收费的，但是物有所值。</p>
+<p>开源引擎中，three.js是最火的，但是仅限于开发3D游戏。其次是CreateJS，由Adobe官方赞助且采用Flash类似的API以及模块化开发，是Flash开发者以及将Flash游戏转换成html5不可多得的选择。Turbulenz虽然开源时间比较晚，但颇有后来者居上的趋势，由于其对2D和3D的同时支持，是同时开发2D和3D游戏的最佳选择。LimeJS与Crafty相比的优势在于有一个公司进行维护，相比个人要更稳定，但是需要依赖于Google Closure，也使之成为一个重量级的框架。Crafty体积小、轻量级，更适合于小游戏的开发。Cocos2d-html5作为国产框架的一个优势在于中文文档和教程多，且得到了Google的支持，但相比ImpactJS、CreateJS仍不够成熟。melonJS、Quintus、lycheeJS的开发者和使用者都较少，相关文档和教程也相对少，还有待观察。</p>
+<p>参考资料</p>
+<ol>
+<li>JavaScript Game Engine Comparison</li>
+</ol>
+<p>转自:<a href="http://blog.csdn.net/zhaoxy_thu/article/details/11867123" target="_blank" rel="external">http://blog.csdn.net/zhaoxy_thu/article/details/11867123</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTML5/" rel="tag"># HTML5</a>
+          
+            <a href="/tags/游戏引擎/" rel="tag"># 游戏引擎</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/22/python基础详解/" rel="next" title="python基础详解">
+                <i class="fa fa-chevron-left"></i> python基础详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/25/Android之Intent分析/" rel="prev" title="Android之Intent分析">
+                Android之Intent分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/10/22/主流HTML5游戏开发引擎的分析和对比/"
+     data-title="主流HTML5游戏开发引擎的分析和对比"
+     data-content=""
+     data-url="http://hanyuanzhen.com/2015/10/22/主流HTML5游戏开发引擎的分析和对比/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/10/22/主流HTML5游戏开发引擎的分析和对比/"
+           data-title="主流HTML5游戏开发引擎的分析和对比" data-url="http://hanyuanzhen.com/2015/10/22/主流HTML5游戏开发引擎的分析和对比/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="HanYuanZhen" />
+          <p class="site-author-name" itemprop="name">HanYuanZhen</p>
+           
+              <p class="site-description motion-element" itemprop="description">韩元桢博客 技术博客 学习总结 思考感悟 知识管理</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="hyz115" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/hanyuanzhen" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、引擎说明"><span class="nav-number">1.</span> <span class="nav-text">一、引擎说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Construct2"><span class="nav-number">1.1.</span> <span class="nav-text">Construct2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ImpactJS"><span class="nav-number">1.2.</span> <span class="nav-text">ImpactJS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LimeJS"><span class="nav-number">1.3.</span> <span class="nav-text">LimeJS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GameMaker"><span class="nav-number">1.4.</span> <span class="nav-text">GameMaker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CreateJS-EaselJS"><span class="nav-number">1.5.</span> <span class="nav-text">CreateJS(EaselJS)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lycheeJS"><span class="nav-number">1.6.</span> <span class="nav-text">lycheeJS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Crafty"><span class="nav-number">1.7.</span> <span class="nav-text">Crafty</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#three-js"><span class="nav-number">1.8.</span> <span class="nav-text">three.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#melonJS"><span class="nav-number">1.9.</span> <span class="nav-text">melonJS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Turbulenz"><span class="nav-number">1.10.</span> <span class="nav-text">Turbulenz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Quintus"><span class="nav-number">1.11.</span> <span class="nav-text">Quintus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cocos2d-html5"><span class="nav-number">1.12.</span> <span class="nav-text">Cocos2d-html5</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、各框架具体参数对比"><span class="nav-number">2.</span> <span class="nav-text">二、各框架具体参数对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、总结"><span class="nav-number">3.</span> <span class="nav-text">三、总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">HanYuanZhen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hanyuanzhen"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
