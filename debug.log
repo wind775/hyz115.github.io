@@ -1,0 +1,15 @@
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Hexo version: 3.2.2","time":"2017-03-28T10:32:12.316Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Working directory: D:\\hexo\\","time":"2017-03-28T10:32:12.316Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Config loaded: D:\\hexo\\_config.yml","time":"2017-03-28T10:32:12.457Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Plugin loaded: hexo-generator-archive","time":"2017-03-28T10:32:12.473Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Plugin loaded: hexo-generator-baidu-sitemap","time":"2017-03-28T10:32:12.488Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Plugin loaded: hexo-deployer-git","time":"2017-03-28T10:32:12.488Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Plugin loaded: hexo-generator-category","time":"2017-03-28T10:32:12.504Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Plugin loaded: hexo-generator-index","time":"2017-03-28T10:32:12.504Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Plugin loaded: hexo-renderer-ejs","time":"2017-03-28T10:32:12.504Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Plugin loaded: hexo-generator-json-content","time":"2017-03-28T10:32:12.629Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Plugin loaded: hexo-renderer-marked","time":"2017-03-28T10:32:12.645Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Plugin loaded: hexo-renderer-stylus","time":"2017-03-28T10:32:12.645Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Plugin loaded: hexo-baidu-url-push","time":"2017-03-28T10:32:12.645Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Plugin loaded: hexo-server","time":"2017-03-28T10:32:12.768Z","v":0}
+{"name":"hexo","hostname":"DESKTOP-1FQ3FUU","pid":2276,"level":20,"msg":"Database saved","time":"2017-03-28T10:32:12.784Z","v":0}
