@@ -1,4 +1,4 @@
-<<?php
+<?php
 $urls = array(
     'http://hanyuanzhen.com/index.html/',
     'http://hanyuanzhen.com/archives/index.html',
