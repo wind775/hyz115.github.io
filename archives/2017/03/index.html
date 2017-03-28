@@ -6,18 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hanyuanzhen.com">
-  <title>核心java系列——java的继承 | 韩元桢博客</title>
+  <title>Archives: 2017/3 | 韩元桢博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="继承是面向对象的一个重要特性，子类继承超类的方法和属性，可以使代码通用性强，封装性好。java中继承不支持多继承。下面分析继承的使用:">
-<meta property="og:type" content="article">
-<meta property="og:title" content="核心java系列——java的继承">
-<meta property="og:url" content="http://hanyuanzhen.com/2015/09/20/核心java系列——java中继承/index.html">
+  <meta name="description" content="韩元桢博客 技术博客 学习总结 思考感悟 知识管理">
+<meta property="og:type" content="website">
+<meta property="og:title" content="韩元桢博客">
+<meta property="og:url" content="http://hanyuanzhen.com/archives/2017/03/index.html">
 <meta property="og:site_name" content="韩元桢博客">
-<meta property="og:description" content="继承是面向对象的一个重要特性，子类继承超类的方法和属性，可以使代码通用性强，封装性好。java中继承不支持多继承。下面分析继承的使用:">
-<meta property="og:updated_time" content="2017-03-11T13:10:27.000Z">
+<meta property="og:description" content="韩元桢博客 技术博客 学习总结 思考感悟 知识管理">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="核心java系列——java的继承">
-<meta name="twitter:description" content="继承是面向对象的一个重要特性，子类继承超类的方法和属性，可以使代码通用性强，封装性好。java中继承不支持多继承。下面分析继承的使用:">
+<meta name="twitter:title" content="韩元桢博客">
+<meta name="twitter:description" content="韩元桢博客 技术博客 学习总结 思考感悟 知识管理">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -147,62 +146,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-核心java系列——java中继承" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      核心java系列——java的继承
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/01/核心java/" class="archive-article-date">
+  	<time datetime="2017-03-01T11:17:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/01/核心java/">核心java系列-抽象类和接口</a>
     </h1>
   
 
-        
-        <a href="/2015/09/20/核心java系列——java中继承/" class="archive-article-date">
-  	<time datetime="2015-09-20T07:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-09-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>继承是面向对象的一个重要特性，子类继承超类的方法和属性，可以使代码通用性强，封装性好。java中继承不支持多继承。下面分析继承的使用:<br><a id="more"></a><br><strong>一、类，超类和子类</strong><br>    继承是子类继承父类的属性和方法，比如在同一公司中，经理和普通职员存在待遇存在差异，比如他们都每月领取自己的薪水，而经理又会领到奖金。<br>    则这可以用继承的概念去构造，子类也能去定义有差异的属性和方法。继承的格式是由关键字extends表示<br>    如 class Employee extends Manager{<br>        //属性和方法<br>    }<br>    通过extends 在已存在的类上派生出一个新类。已存在的类被称为超类，基类或父类，新类被称为派生类，子类。超类并不比子类存在更多的功能<br>    1.子类可扩展超类没有的方法。<br>    2.通用的方法常封装在父类中定义。<br>    3.子类可以增加域，增加方法或覆盖父类的方法，但不能删除继承父类的域和方法。<br>    super关键字:是指向父类的，可以拥有调用父类的属性和方法,如super(name)调用父类具有相同参数的构造器。<br>    下面用如下几个方面继承中的几个概念：<br>    <strong>1.继承层次</strong><br>    继承不只局限于一个层次，也可以多层次继承，有一个公共类派生出所有类的集合被称为继承的层次。<br>    java不支持多继承。<br>    <strong>2.多态</strong><br>    多态是指一个类可以有多种对象的引用，子类的每个对象也可是超类的对象，比如<br>    Employee e=new Employee();<br>    Employee e=new Manager(); 说明e即可父类Employee的引用，也是子类Manager的引用。<br>    <strong>3.动态绑定</strong><br>    动态绑定是一种很重要的特性，可以在无须修改现存代码的基础上对程序进行扩展，比如生成一个新类B,变量e持有类B的引用，则对类中的非final,private,static修饰的方法，变量e都可调用。<br>    <strong>4.阻止继承</strong><br>     父类中若有些方法不想被子类去继承，则可用final修饰，被称为不可扩展类。定义形式如下:<br>     final class Manager extends Employee{<br>     }<br>     类中的方法也可被修饰成final类.且此方法无法被继承。如</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Employee</span></span>&#123;</div><div class="line">	 <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	  &#125;</div></pre></td></tr></table></figure>
-<p><strong>5.抽象类</strong><br>java中抽象是一个很重要的概念，抽象类和抽象方法的具体实现在其子类中，扩展抽象的方法有如下方式<br>1.在子类中定义部分抽象方法或不定义抽象方法，则子类必须定义为抽象类。<br>2.在子类定义全部的抽象方法，则子类不需要定义为抽象类。<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Person</span> &#123;</div><div class="line">	<span class="keyword">private</span> String name;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Person</span>(<span class="params">String name</span>)</span>&#123;</div><div class="line">		<span class="keyword">this</span>.name=name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getDescription</span>(<span class="params"></span>)</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Employee</span><span class="params">(String name,<span class="keyword">double</span> s,<span class="keyword">int</span> year,<span class="keyword">int</span> month,<span class="keyword">int</span> day)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(name);</div><div class="line">		salary=s;</div><div class="line">		GregorianCalendar calendar=<span class="keyword">new</span> GregorianCalendar(year, month<span class="number">-1</span>, day);</div><div class="line">		hday=calendar.getTime();</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> <span class="function">String <span class="title">getDescription</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="function"><span class="keyword">return</span> String.<span class="title">format</span><span class="params">(<span class="string">" an employee salry is $%.2f"</span>, salary)</span></span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">private</span>  <span class="keyword">double</span> salary;</div><div class="line">	<span class="keyword">private</span> Date hday;</div><div class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">double</span> <span class="title">getSalary</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> salary;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> <span class="function">Date <span class="title">getHday</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> hday;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>6.受保护访问</strong><br>在类中常将属性修饰为private，方法修饰为public 可让子类不能访问超类中的私有属性。然而有时候超类的中的某个属性能被子类访问。<br>则可将此属性修饰为protected.如Employee的name属性被protected修饰，子类可访问该属性，而不能访问其他属性。<br>java中常用于控制可见性的4个修饰符:<br>对本类可见-private<br>对所有类可见-public<br>对本包和所有子类可见-protected<br>对本包可见-默认修饰符</p>
-<p><strong>二、Object-所有类的超类</strong><br>Object类所有java类的祖先，java中每个类都是由它扩展而来。如除基本类型不是对象，字符，布尔类型等都不是对象，所有数组类型，包括基本类型与对象数组都扩展于Object.<br>Object中几个比较重要的方法，如equals,HashCode()和toString()等方法<br>1.equals()是检测一个对象是否与另一个对象相同，在Object中，用于判断两个对象的引用是否相同，若引用相同，则认为两个对象是相等的。<br>2.hashCode()方法是基于散列码，散列码是对象导出的一个整型值，若x,y是两个不同的对象，则x.hashCode()与y.hashCode()基本不会相同。<br>  Equals()与hashCode()的定义必须一致，如x.equals(y)返回true,则x.hashCode()与y.hashCode()就必须有相同的值。</p>
-<p>3.toString()返回对象值的字符串<br>如 public string toString(){<br>    return “Employee[name=”+name+”,salary=”+salary+”]”<br>    }<br>    或<br>public string toString(){<br>    return getClass().getName()+”[name=”+name+”,salary=”+salary+”]”<br>    }</p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -210,15 +183,11 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">继承</a>
-        		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -231,113 +200,17 @@
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://hanyuanzhen.com/2015/09/20/核心java系列——java中继承/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2015/10/02/核心java系统——反射机制/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          核心java系列——反射
-        
-      </div>
-    </a>
   
   
-    <a href="/2015/05/10/python映像和集合类型/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">python映像和集合类型</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-
-
-
-
-  
-  <div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="核心java系列——java中继承" data-title="核心java系列——java的继承" data-url="http://hanyuanzhen.com/2015/09/20/核心java系列——java中继承/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"true"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
+    </div></section>
   
 
-
+    
 
 
           </div>
@@ -360,8 +233,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
@@ -418,26 +291,6 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">版本控制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ant</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">web开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hiberante</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">图像裁剪</a>
               </li>
              
@@ -446,7 +299,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SVN</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">web开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,6 +316,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">AIXS2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SVN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">版本控制</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -491,6 +356,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目构建</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hiberante</a>
               </li>
              
               <li class="article-tag-list-item">

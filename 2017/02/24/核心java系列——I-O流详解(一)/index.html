@@ -6,18 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hanyuanzhen.com">
-  <title>核心java系列——线程（二） | 韩元桢博客</title>
+  <title>核心java系列——I/O流详解（一） | 韩元桢博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在大多数实际应用中，常常存在两个或两个以上的线程共享对同一数据的存储。如果多个线程去对同一对象的数据进行修改，则会引起线程竞争资源，导致数据被修改错误的问题，比如在ATM机上取款，多个用户对同一账户进行操作就会很容易发生。所以下面分析如何解决多线程共享资源引起竞争导致数据破坏问题。">
+  <meta name="description" content="流的概念流是一系列有顺序的字节的集合，是网络传输的载体，流可以包装成基本数据类型或对象，流有输入和输出，输入时是从流从数据源流向程序输出时是流从程序传向数据源，而数据源可以是内存，文件，网络或程序等。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="核心java系列——线程（二）">
-<meta property="og:url" content="http://hanyuanzhen.com/2015/10/21/核心java系列——线程（二）/index.html">
+<meta property="og:title" content="核心java系列——I/O流详解（一）">
+<meta property="og:url" content="http://hanyuanzhen.com/2017/02/24/核心java系列——I-O流详解(一)/index.html">
 <meta property="og:site_name" content="韩元桢博客">
-<meta property="og:description" content="在大多数实际应用中，常常存在两个或两个以上的线程共享对同一数据的存储。如果多个线程去对同一对象的数据进行修改，则会引起线程竞争资源，导致数据被修改错误的问题，比如在ATM机上取款，多个用户对同一账户进行操作就会很容易发生。所以下面分析如何解决多线程共享资源引起竞争导致数据破坏问题。">
-<meta property="og:updated_time" content="2017-03-11T13:10:27.000Z">
+<meta property="og:description" content="流的概念流是一系列有顺序的字节的集合，是网络传输的载体，流可以包装成基本数据类型或对象，流有输入和输出，输入时是从流从数据源流向程序输出时是流从程序传向数据源，而数据源可以是内存，文件，网络或程序等。">
+<meta property="og:image" content="http://img.blog.csdn.net/20151126200300792">
+<meta property="og:image" content="http://img.blog.csdn.net/20151126200445656">
+<meta property="og:updated_time" content="2017-03-28T03:39:53.863Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="核心java系列——线程（二）">
-<meta name="twitter:description" content="在大多数实际应用中，常常存在两个或两个以上的线程共享对同一数据的存储。如果多个线程去对同一对象的数据进行修改，则会引起线程竞争资源，导致数据被修改错误的问题，比如在ATM机上取款，多个用户对同一账户进行操作就会很容易发生。所以下面分析如何解决多线程共享资源引起竞争导致数据破坏问题。">
+<meta name="twitter:title" content="核心java系列——I/O流详解（一）">
+<meta name="twitter:description" content="流的概念流是一系列有顺序的字节的集合，是网络传输的载体，流可以包装成基本数据类型或对象，流有输入和输出，输入时是从流从数据源流向程序输出时是流从程序传向数据源，而数据源可以是内存，文件，网络或程序等。">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20151126200300792">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -147,47 +150,61 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-核心java系列——线程（二）" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-核心java系列——I-O流详解(一)" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      核心java系列——线程（二）
+      核心java系列——I/O流详解（一）
     </h1>
   
 
         
-        <a href="/2015/10/21/核心java系列——线程（二）/" class="archive-article-date">
-  	<time datetime="2015-10-21T07:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-10-21</time>
+        <a href="/2017/02/24/核心java系列——I-O流详解(一)/" class="archive-article-date">
+  	<time datetime="2017-02-24T07:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-24</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在大多数实际应用中，常常存在两个或两个以上的线程共享对同一数据的存储。如果多个线程去对同一对象的数据进行修改，则会引起线程竞争资源，导致数据被修改错误的问题，<br>比如在ATM机上取款，多个用户对同一账户进行操作就会很容易发生。所以下面分析如何解决多线程共享资源引起竞争导致数据破坏问题。<br><a id="more"></a></p>
-<h3 id="一、锁的原理"><a href="#一、锁的原理" class="headerlink" title="一、锁的原理"></a><strong>一、锁的原理</strong></h3><p>java中为每一个对象都提供了锁机制，用synchronized关键字修饰，它可以修饰方法和代码块。当一个对象获得该锁时，只能充许一个线程对该对象进行操作，其他线程处于等待状态，直到该线程释放锁。<br>锁时可以重复利用的，锁有一个持有计数器来记录被利用的情况。线程可以根据计数器去加锁和释放锁。<br>条件对象可以理解为临界区，线程只有在满足某一条件后才能使用它，一个锁对象可以有一个或多个相关的条件对象。以下为同步实例的实现:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FooThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> x=<span class="number">100</span>;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">FooThread</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(name);</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</div><div class="line">			x=<span class="keyword">this</span>.sub(x, <span class="number">30</span>);</div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				Thread.sleep(<span class="number">1</span>);</div><div class="line">			&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">				e.printStackTrace();</div><div class="line">			&#125;</div><div class="line">			System.out.println(Thread.currentThread().getName() + <span class="string">" : 当前的x值= "</span> +x); </div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">sub</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> x=x-y;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="二、内部锁"><a href="#二、内部锁" class="headerlink" title="二、内部锁"></a><strong>二、内部锁</strong></h3><p>内部锁将类的相关静态方法加上synchronized关键字,比如Bank类有一个静态同步的方法，那么当该方法被调用时，Bank.class将会被调用对象锁住，则其他线程无法再调用该类中的对象和其他同步的静态方法。<br>内部锁也存在以下局限性：<br>1.无法中断一个在视图获得锁的线程<br>2.视图锁得锁事不能设定超时<br>3.每一个锁仅有一个单一条件</p>
-<h3 id="三、同步阻塞"><a href="#三、同步阻塞" class="headerlink" title="三、同步阻塞"></a><strong>三、同步阻塞</strong></h3><p>如果线程试图进入同步方法，而其锁已经被占用，则线程在该对象上被阻塞。实质上，线程进入该对象的的一种池中，必须在哪里等待，直到其锁被释放，该线程再次变为可运行或运行为止。<br>当考虑阻塞时，一定要注意哪个对象正被用于锁定：<br>1、调用同一个对象中非静态同步方法的线程将彼此阻塞。如果是不同对象，则每个线程有自己的对象的锁，线程间彼此互不干预。<br>2、调用同一个类中的静态同步方法的线程将彼此阻塞，它们都是锁定在相同的Class对象上。<br>3、静态同步方法和非静态同步方法将永远不会彼此阻塞，因为静态方法锁定在Class对象上，非静态方法锁定在该类的对象上。<br>4、对于同步代码块，要看清楚什么对象已经用于锁定（synchronized后面括号的内容）。在同一个对象上进行同步的线程将彼此阻塞，在不同对象上锁定的线程将永远不会彼此阻塞。<br><strong>volatile域</strong><br>若仅仅为了读写一个或两个实例域就使用同步，这对资源的开销过大。volatile是为实例域的访问提供了一种免锁机制，若声明一个实例域为volatile，则虚拟机就知道该域可能被其他线程并发访问。声明方式：<br>private volatile boolean flag;<br>还有一种用于原子整数，浮点数等的包装器类 Atomic可以应用于程序的并发访问，保证域的安全。<br>总之，在以下三个条件下，域的并发访问是安全的:<br>1.域是final 并且在在构造器调用完成后访问<br>2.对域的访问由公有的锁进行保护<br>3.域是volatile的</p>
-<h3 id="四、线程安全"><a href="#四、线程安全" class="headerlink" title="四、线程安全"></a><strong>四、线程安全</strong></h3><p>当一个类已经很好的同步以保护它的数据时，这个类就称为“线程安全的”。<br>即使是线程安全类，也应该特别小心，因为操作的线程是间仍然不一定安全。<br>举个形象的例子，比如一个集合是线程安全的，有两个线程在操作同一个集合对象，当第一个线程查询集合非空后，删除集合中所有元素的时候。第二个线程也来执行与第一个线程相同的操作，也许在第一个线程查询后，第二个线程也查询出集合非空，但是当第一个执行清除后，第二个再执行删除显然是不对的，因为此时集合已经为空了。程序说明如下:</p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> class Demo4 &#123;</div><div class="line">	@SuppressWarnings(<span class="string">"unchecked"</span>)</div><div class="line">	<span class="keyword">private</span> List resultList=Collections.synchronizedList(<span class="keyword">new</span> LinkedList());</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="built_in">add</span>(<span class="keyword">String</span> param)&#123;</div><div class="line">		resultList.<span class="built_in">add</span>(param);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">String</span> remove()&#123;</div><div class="line">		<span class="keyword">if</span>(resultList.<span class="built_in">size</span>()&gt;<span class="number">0</span>)&#123;</div><div class="line">			<span class="keyword">return</span> (<span class="keyword">String</span>) resultList.remove(<span class="number">0</span>);</div><div class="line">		&#125;<span class="keyword">else</span>&#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>测试调用</strong></p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public static void main(<span class="type">String</span>[] args) &#123;</div><div class="line">	<span class="keyword">final</span> <span class="type">Demo4</span> d=<span class="keyword">new</span> <span class="type">Demo4</span>();</div><div class="line">	d.add(<span class="string">"test"</span>);</div><div class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Test</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</div><div class="line">		<span class="meta">@Override</span></div><div class="line">		public void run() &#123;</div><div class="line">			<span class="type">String</span> param=d.remove();</div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				<span class="type">Thread</span>.sleep(<span class="number">1</span>);</div><div class="line">			&#125; <span class="keyword">catch</span> (<span class="type">InterruptedException</span> e) &#123;</div><div class="line">				e.printStackTrace();</div><div class="line">			&#125;</div><div class="line">			<span class="type">System</span>.out.println(param);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="type">Thread</span> t1=<span class="keyword">new</span> <span class="type">Test</span>();</div><div class="line">	<span class="type">Thread</span> t2=<span class="keyword">new</span> <span class="type">Test</span>();</div><div class="line">	t1.start();</div><div class="line">	t2.start();</div><div class="line">		</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<p>虽然集合对象  private List nameList = Collections.synchronizedList(new LinkedList());<br>是同步的，但若remove()方法的synchronized去掉后，会引起线程不安全问题。</p>
-<h3 id="五、死锁"><a href="#五、死锁" class="headerlink" title="五、死锁"></a><strong>五、死锁</strong></h3><p>锁和条件不能解决多线程中所有问题，当多个线程发生阻塞时，每个线程在等待另一线程释放资源会发生死锁，比如 账户A：200元，账户B:300元，A线程从账户A转移300到账户B,线程B从账户B转移400到账户A，因为A和B账户的余额都不足，无法进行转换，两个线程无法继续执行，而引发死锁状态。下面看一个发生死锁的实例:</p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> class DeadLock implements Runnable &#123;</div><div class="line">	<span class="built_in">int</span> flag=<span class="number">1</span>;</div><div class="line">	<span class="keyword">final</span> <span class="keyword">Object</span> o1=<span class="keyword">new</span> <span class="keyword">Object</span>();</div><div class="line">	<span class="keyword">final</span> <span class="keyword">Object</span> o2=<span class="keyword">new</span> <span class="keyword">Object</span>();</div><div class="line">	@Override</div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> run() &#123;</div><div class="line">		System.out.<span class="built_in">println</span>(<span class="string">"flag="</span>+flag);</div><div class="line">		<span class="keyword">if</span>(flag==<span class="number">1</span>)&#123;</div><div class="line">			<span class="keyword">synchronized</span> (o1) &#123;</div><div class="line">				<span class="keyword">try</span> &#123;</div><div class="line">					Thread.sleep(<span class="number">300</span>);</div><div class="line">				&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">					e.printStackTrace();</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">synchronized</span> (o2) &#123;</div><div class="line">				System.out.<span class="built_in">println</span>(<span class="string">"1"</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(flag==<span class="number">0</span>)&#123;</div><div class="line">			<span class="keyword">synchronized</span> (o2) &#123;</div><div class="line">				<span class="keyword">try</span> &#123;</div><div class="line">					Thread.sleep(<span class="number">300</span>);</div><div class="line">				&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">					e.printStackTrace();</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">synchronized</span> (o1) &#123;</div><div class="line">				System.out.<span class="built_in">println</span>(<span class="string">"2"</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>程序说明:</strong></p>
-<p> ◆ 一个线程（ThreadA）调用run()。 </p>
-<p>  ◆ ThreadA在o1上同步，但允许被抢先执行。 </p>
-<p>  ◆ 另一个线程（ThreadB）开始执行。 </p>
-<p>  ◆ ThreadB调用run()。 </p>
-<p>  ◆ ThreadB获得o2，继续执行，企图获得o1。但ThreadB不能获得o1，因为ThreadA占有o1。 </p>
-<p>  ◆ 现在，ThreadB阻塞，因为它在等待ThreadA释放o1。 </p>
-<p>  ◆ 现在轮到ThreadA继续执行。ThreadA试图获得o2，但不能成功，因为o2已经被ThreadB占有了。 </p>
-<p>  ◆ ThreadA和ThreadB都被阻塞，程序死锁。 </p>
+        <p>流的概念流是一系列有顺序的字节的集合，是网络传输的载体，流可以包装成基本数据类型或对象，流有输入和输出，输入时是从流从数据源流向程序输出时是流从程序传向数据源，而数据源可以是内存，文件，网络或程序等。<br><a id="more"></a></p>
+<h3 id="一、流的概念"><a href="#一、流的概念" class="headerlink" title="一、流的概念"></a>一、流的概念</h3><p>流是一系列有顺序的字节的集合，是网络传输的载体，流可以包装成基本数据类型或对象，流有输入和输出，输入时是从流从数据源流向程序输出时是流从程序传向数据源，而数据源可以是内存，文件，网络或程序等，下面是流的输入和输出的图形化：<br><img src="http://img.blog.csdn.net/20151126200300792" alt="这里写图片描述"></p>
+<h3 id="二、流的分类"><a href="#二、流的分类" class="headerlink" title="二、流的分类"></a>二、流的分类</h3><p><strong>(1)、流有字节流，字符流，输入流和输出流等。</strong></p>
+<ul>
+<li>根据处理方向不同可分为：输入流和输出流。</li>
+<li>根据处理数据类型不同可分为：字节流和字符流。<br>字节流和字符流的处理原理是相同的，只是处理的数据类型不同。<br>字节流是以字节为单位来传输，一个字节是8bit;<br>字符流是以字符为单位来传输，一个字符是16bit。</li>
+<li>根据分工的不同可分为：节点流和处理流</li>
+</ul>
+<p><strong>(2)、java I/O流基本类有</strong><br>字节流的抽象基类：<br>InputStream(字节输入流),OutputStream(字节输出流)<br>字符流的抽象基类:<br>Reader(字符输入流)，writer(字符输出流)<br>其他类都由这4个抽象基本派生出来，详细的流的类图结构如下:<br><img src="http://img.blog.csdn.net/20151126200445656" alt="这里写图片描述"></p>
+<h3 id="三、输入和输出流"><a href="#三、输入和输出流" class="headerlink" title="三、输入和输出流"></a>三、输入和输出流</h3><p><strong>(1)、输入可使用：</strong><br>1.InputStream – 一个字节一个字节(byte)地从数据源读取。<br><em>读取一个字节并以整数的形式返回(0~255),如果返回-1已到输入流的末尾。<br>int read() ；
+</em>读取一系列字节并存储到一个数组buffer，返回实际读取的字节数，如果读取前已到输入流的末尾返回-1。<br>int read(byte[] buffer) ；<br><em>读取length个字节并存储到一个字节数组buffer，从off位置开始存,最多len， 返回实际读取的字节数，如果读取前以到输入流的末尾返回-1。<br>int read(byte[] buffer, int off, int len)  ；                  
+</em>关闭流释放内存资源。<br>void close() ;<br>2.Reader – 一个字符一个字符(char)地从数据源读取。<br><em>读取一个字符并以整数的形式返回(0~255),如果返回-1已到输入流的末尾。<br>int read() ；
+</em>读取一系列字符并存储到一个数组buffer，返回实际读取的字符数，如果读取前已到输入流的末尾返回-1。<br>int read(char[] cbuf) ；<br><em>读取length个字符,并存储到一个数组buffer，从off位置开始存,最多读取len，返回实际读取的字符数，如果读取前以到输入流的末尾返回-1。<br>int read(char[] cbuf, int off, int len)                  
+</em>关闭流释放内存资源。<br>void close()<br><strong>(2)、输入流可使用</strong><br>1.OutputStream:<br><em>向输出流中写入一个字节数据,该字节数据为参数b的低8位。<br>void write(int b) ;
+</em>将一个字节类型的数组中的数据写入输出流。<br>void write(byte[] b);<br><em>将一个字节类型的数组中的从指定位置（off）开始的,len个字节写入到输出流。<br>void write(byte[] b, int off, int len);
+</em>关闭流释放内存资源。<br>void close();<br>*将输出流中缓冲的数据全部写出到目的地。<br>void flush();</p>
+<p>2.Writer:<br><em>向输出流中写入一个字符数据,该字节数据为参数b的低16位。<br>void write(int c);
+</em>将一个字符类型的数组中的数据写入输出流，<br>void write(char[] cbuf) throws IOException<br><em>将一个字符类型的数组中的从指定位置（offset）开始的,length个字符写入到输出流。<br>void write(char[] cbuf, int offset, int length);
+</em>将一个字符串中的字符写入到输出流。<br>void write(String string);<br><em>将一个字符串从offset开始的length个字符写入到输出流。<br>void write(String string, int offset, int length);
+</em>关闭流释放内存资源。<br>void close() throws IOException<br>*将输出流中缓冲的数据全部写出到目的地。<br>void flush() throws IOException</p>
+<h3 id="四、读写文本文件"><a href="#四、读写文本文件" class="headerlink" title="四、读写文本文件"></a>四、读写文本文件</h3><p><strong>(1).写文本文件</strong><br>1.FileWriter是继承writer类，可调用write()方法往文本中写入内容。下面程序为调用FileWriter类的write(type c)方法的实现:</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">String</span> fileName=<span class="string">"d:\\demo1.txt"</span>;</div><div class="line">FileWriter <span class="built_in">write</span>=<span class="keyword">new</span> FileWriter(fileName);</div><div class="line"><span class="built_in">write</span>.<span class="built_in">write</span>(<span class="string">"hell,io\n"</span>);</div><div class="line"><span class="built_in">write</span>.<span class="built_in">write</span>(<span class="string">"welcome to study\n"</span>);</div><div class="line"><span class="built_in">write</span>.<span class="built_in">write</span>(<span class="string">"加油，谢谢！"</span>);</div><div class="line"><span class="built_in">write</span>.<span class="built_in">close</span>();</div></pre></td></tr></table></figure>
+<p>2.BufferedWriter类是带缓冲区的，比FileWriter要高效些，若写入的内容多优先使用此类，此类有一个newLine()方法，可换行。<br>下面程序为BufferedWriter类write(type c)方法的实现:</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//处理内容较多的数据是，用BufferedWriter更高效</span></div><div class="line">BufferedWriter bWrite=<span class="keyword">new</span> <span class="type">BufferedWriter</span>(<span class="keyword">new</span> <span class="type">FileWriter</span>(fileName));</div><div class="line">bWrite.write(<span class="string">"hell,io"</span>);</div><div class="line">bWrite.<span class="keyword">new</span><span class="type">Line</span>();</div><div class="line">bWrite.write(<span class="string">"welcome to study"</span>);</div><div class="line">bWrite.<span class="keyword">new</span><span class="type">Line</span>();</div><div class="line">bWrite.write(<span class="string">"加油，谢谢！"</span>);</div><div class="line">bWrite.close();</div></pre></td></tr></table></figure>
+<p>不论使用哪种方式，结束时都需要close()关闭流，否则会导致资源耗尽问题。<br><strong>(2).读文本文件</strong><br>1.FileReader类是从文本文件读取字符，下面代码为FileReader类读取文本文件的实现，返回的是一个int类型数。若读取到末尾，则返回-1，下面为具体的实现:</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">FileReader <span class="built_in">read</span>=<span class="keyword">new</span> FileReader(fileName);</div><div class="line"><span class="keyword">int</span> len=<span class="built_in">read</span>.<span class="built_in">read</span>();</div><div class="line"><span class="built_in">while</span>(len!=<span class="number">-1</span>)&#123;</div><div class="line">	System.out.<span class="built_in">println</span>(<span class="string">"len:"</span>+len);</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<p>2.BufferedReader类是文本文件读取的缓存器类，调用readLine()方法，可一行一行的读取出整行字符，若读取到末尾返回null,下面为具体的实现:</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">BufferedReader <span class="built_in">read</span>=<span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(fileName));</div><div class="line"><span class="keyword">String</span> <span class="built_in">line</span>=<span class="built_in">read</span>.readLine();</div><div class="line"><span class="built_in">while</span>(<span class="built_in">line</span>!=null)&#123;</div><div class="line">	System.out.<span class="built_in">println</span>(<span class="string">"line:"</span>+<span class="built_in">line</span>);</div><div class="line">	<span class="built_in">line</span>=<span class="built_in">read</span>.readLine();</div><div class="line">&#125;</div><div class="line"><span class="built_in">read</span>.<span class="built_in">close</span>();</div></pre></td></tr></table></figure>
+<p>同时不论使用哪种方式，结束时都需要调用close()关闭流，否则会导致资源耗尽问题.</p>
+<h3 id="五、读写二进制数据"><a href="#五、读写二进制数据" class="headerlink" title="五、读写二进制数据"></a>五、读写二进制数据</h3><p>对于纯文本文件里的内容都可解释为字符，可以用Reader和writer进行读写，但对于那些图片，声音的不是纯文本的内容，则需要利用二进制的字节方式进行读写，利用二进制字节读取数据要比字符快，且编码问题小。<br><strong>(1).写二进制字节数据</strong><br>FileOutputStream类:用于字节的输出；DataOutputStream类:用于将数据写到另一个输出流。下面为具体的实现:</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">DataOutputStream <span class="keyword">out</span> =<span class="keyword">new</span> DataOutputStream(<span class="keyword">new</span> FileOutputStream(fileName));</div><div class="line"><span class="keyword">out</span>.writeInt(<span class="number">1</span>);</div><div class="line"><span class="keyword">out</span>.writeDouble(<span class="number">11.20</span>);</div><div class="line"><span class="keyword">out</span>.writeUTF(<span class="string">"test"</span>);</div><div class="line"><span class="keyword">out</span>.close();</div></pre></td></tr></table></figure>
+<p><strong>(2).读二进制文件</strong></p>
+<p>通过另外一个流来构造一个过滤流，常用的子类有<br>DataInputStream 和 BufferedInputStream。后者是将字节数据读取到缓冲区.相对要高效些。下面为具体的实现:</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">String</span> fileName=<span class="string">"d:\\demo.dat"</span>;</div><div class="line">DataInputStream <span class="keyword">in</span>=<span class="keyword">new</span><span class="type"></span>	DataInputStream(<span class="keyword">new</span> <span class="type">BufferedInputStream</span>(<span class="keyword">new</span> <span class="type">FileInputStream</span>(fileName)));</div><div class="line">System.out.println(<span class="keyword">in</span>.readInt()+<span class="string">"-"</span>+<span class="keyword">in</span>.readDouble()+<span class="string">"-"</span>+<span class="keyword">in</span>.readUTF());</div><div class="line"><span class="keyword">in</span>.close();</div></pre></td></tr></table></figure>
+<p>还有几个特殊的类,如:<br>LineNumberInputStream:构造一个读取指定的输入流的输入​​的新行号输入流。<br>PushbackInputStream:构建一个可预览一个字节或具有指定尺寸的缓冲区的流。<br>总结：本文主要分析了流的作用，流的分类，流的类图结构以及流的一些操作，比较基础，下篇将介绍流的文件管理，文档的压缩和对象序列化等操作。</p>
 
       
 
@@ -223,10 +240,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
         		</li>
       		
 		</ul>
@@ -293,7 +306,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://hanyuanzhen.com/2015/10/21/核心java系列——线程（二）/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://hanyuanzhen.com/2017/02/24/核心java系列——I-O流详解(一)/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -307,18 +320,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2015/10/22/python基础详解/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/03/01/核心java/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          python基础详解
+          核心java系列-抽象类和接口
         
       </div>
     </a>
   
   
-    <a href="/2015/10/20/核心java系列——线程（一）/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">核心java系列——线程（一）</div>
+    <a href="/2017/02/20/核心java系列——java中继承/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">核心java系列——java的继承</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -332,7 +345,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="核心java系列——线程（二）" data-title="核心java系列——线程（二）" data-url="http://hanyuanzhen.com/2015/10/21/核心java系列——线程（二）/"></div>
+	<div class="ds-thread" data-thread-key="核心java系列——I-O流详解(一)" data-title="核心java系列——I/O流详解（一）" data-url="http://hanyuanzhen.com/2017/02/24/核心java系列——I-O流详解(一)/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -432,26 +445,6 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">版本控制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ant</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">web开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hiberante</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">图像裁剪</a>
               </li>
              
@@ -460,7 +453,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SVN</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">web开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -473,6 +470,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">AIXS2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SVN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">版本控制</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -505,6 +510,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目构建</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hiberante</a>
               </li>
              
               <li class="article-tag-list-item">

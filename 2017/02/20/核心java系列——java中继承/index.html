@@ -6,21 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hanyuanzhen.com">
-  <title>核心java系列——I/O流详解（一） | 韩元桢博客</title>
+  <title>核心java系列——java的继承 | 韩元桢博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="流的概念流是一系列有顺序的字节的集合，是网络传输的载体，流可以包装成基本数据类型或对象，流有输入和输出，输入时是从流从数据源流向程序输出时是流从程序传向数据源，而数据源可以是内存，文件，网络或程序等。">
+  <meta name="description" content="继承是面向对象的一个重要特性，子类继承超类的方法和属性，可以使代码通用性强，封装性好。java中继承不支持多继承。下面分析继承的使用:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="核心java系列——I/O流详解（一）">
-<meta property="og:url" content="http://hanyuanzhen.com/2015/11/24/核心java系列——I-O流详解(一)/index.html">
+<meta property="og:title" content="核心java系列——java的继承">
+<meta property="og:url" content="http://hanyuanzhen.com/2017/02/20/核心java系列——java中继承/index.html">
 <meta property="og:site_name" content="韩元桢博客">
-<meta property="og:description" content="流的概念流是一系列有顺序的字节的集合，是网络传输的载体，流可以包装成基本数据类型或对象，流有输入和输出，输入时是从流从数据源流向程序输出时是流从程序传向数据源，而数据源可以是内存，文件，网络或程序等。">
-<meta property="og:image" content="http://img.blog.csdn.net/20151126200300792">
-<meta property="og:image" content="http://img.blog.csdn.net/20151126200445656">
-<meta property="og:updated_time" content="2017-03-11T13:10:27.000Z">
+<meta property="og:description" content="继承是面向对象的一个重要特性，子类继承超类的方法和属性，可以使代码通用性强，封装性好。java中继承不支持多继承。下面分析继承的使用:">
+<meta property="og:updated_time" content="2017-03-28T03:40:11.469Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="核心java系列——I/O流详解（一）">
-<meta name="twitter:description" content="流的概念流是一系列有顺序的字节的集合，是网络传输的载体，流可以包装成基本数据类型或对象，流有输入和输出，输入时是从流从数据源流向程序输出时是流从程序传向数据源，而数据源可以是内存，文件，网络或程序等。">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20151126200300792">
+<meta name="twitter:title" content="核心java系列——java的继承">
+<meta name="twitter:description" content="继承是面向对象的一个重要特性，子类继承超类的方法和属性，可以使代码通用性强，封装性好。java中继承不支持多继承。下面分析继承的使用:">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -150,61 +147,33 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-核心java系列——I-O流详解(一)" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-核心java系列——java中继承" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      核心java系列——I/O流详解（一）
+      核心java系列——java的继承
     </h1>
   
 
         
-        <a href="/2015/11/24/核心java系列——I-O流详解(一)/" class="archive-article-date">
-  	<time datetime="2015-11-24T07:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-24</time>
+        <a href="/2017/02/20/核心java系列——java中继承/" class="archive-article-date">
+  	<time datetime="2017-02-20T07:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>流的概念流是一系列有顺序的字节的集合，是网络传输的载体，流可以包装成基本数据类型或对象，流有输入和输出，输入时是从流从数据源流向程序输出时是流从程序传向数据源，而数据源可以是内存，文件，网络或程序等。<br><a id="more"></a></p>
-<h3 id="一、流的概念"><a href="#一、流的概念" class="headerlink" title="一、流的概念"></a>一、流的概念</h3><p>流是一系列有顺序的字节的集合，是网络传输的载体，流可以包装成基本数据类型或对象，流有输入和输出，输入时是从流从数据源流向程序输出时是流从程序传向数据源，而数据源可以是内存，文件，网络或程序等，下面是流的输入和输出的图形化：<br><img src="http://img.blog.csdn.net/20151126200300792" alt="这里写图片描述"></p>
-<h3 id="二、流的分类"><a href="#二、流的分类" class="headerlink" title="二、流的分类"></a>二、流的分类</h3><p><strong>(1)、流有字节流，字符流，输入流和输出流等。</strong></p>
-<ul>
-<li>根据处理方向不同可分为：输入流和输出流。</li>
-<li>根据处理数据类型不同可分为：字节流和字符流。<br>字节流和字符流的处理原理是相同的，只是处理的数据类型不同。<br>字节流是以字节为单位来传输，一个字节是8bit;<br>字符流是以字符为单位来传输，一个字符是16bit。</li>
-<li>根据分工的不同可分为：节点流和处理流</li>
-</ul>
-<p><strong>(2)、java I/O流基本类有</strong><br>字节流的抽象基类：<br>InputStream(字节输入流),OutputStream(字节输出流)<br>字符流的抽象基类:<br>Reader(字符输入流)，writer(字符输出流)<br>其他类都由这4个抽象基本派生出来，详细的流的类图结构如下:<br><img src="http://img.blog.csdn.net/20151126200445656" alt="这里写图片描述"></p>
-<h3 id="三、输入和输出流"><a href="#三、输入和输出流" class="headerlink" title="三、输入和输出流"></a>三、输入和输出流</h3><p><strong>(1)、输入可使用：</strong><br>1.InputStream – 一个字节一个字节(byte)地从数据源读取。<br><em>读取一个字节并以整数的形式返回(0~255),如果返回-1已到输入流的末尾。<br>int read() ；
-</em>读取一系列字节并存储到一个数组buffer，返回实际读取的字节数，如果读取前已到输入流的末尾返回-1。<br>int read(byte[] buffer) ；<br><em>读取length个字节并存储到一个字节数组buffer，从off位置开始存,最多len， 返回实际读取的字节数，如果读取前以到输入流的末尾返回-1。<br>int read(byte[] buffer, int off, int len)  ；                  
-</em>关闭流释放内存资源。<br>void close() ;<br>2.Reader – 一个字符一个字符(char)地从数据源读取。<br><em>读取一个字符并以整数的形式返回(0~255),如果返回-1已到输入流的末尾。<br>int read() ；
-</em>读取一系列字符并存储到一个数组buffer，返回实际读取的字符数，如果读取前已到输入流的末尾返回-1。<br>int read(char[] cbuf) ；<br><em>读取length个字符,并存储到一个数组buffer，从off位置开始存,最多读取len，返回实际读取的字符数，如果读取前以到输入流的末尾返回-1。<br>int read(char[] cbuf, int off, int len)                  
-</em>关闭流释放内存资源。<br>void close()<br><strong>(2)、输入流可使用</strong><br>1.OutputStream:<br><em>向输出流中写入一个字节数据,该字节数据为参数b的低8位。<br>void write(int b) ;
-</em>将一个字节类型的数组中的数据写入输出流。<br>void write(byte[] b);<br><em>将一个字节类型的数组中的从指定位置（off）开始的,len个字节写入到输出流。<br>void write(byte[] b, int off, int len);
-</em>关闭流释放内存资源。<br>void close();<br>*将输出流中缓冲的数据全部写出到目的地。<br>void flush();</p>
-<p>2.Writer:<br><em>向输出流中写入一个字符数据,该字节数据为参数b的低16位。<br>void write(int c);
-</em>将一个字符类型的数组中的数据写入输出流，<br>void write(char[] cbuf) throws IOException<br><em>将一个字符类型的数组中的从指定位置（offset）开始的,length个字符写入到输出流。<br>void write(char[] cbuf, int offset, int length);
-</em>将一个字符串中的字符写入到输出流。<br>void write(String string);<br><em>将一个字符串从offset开始的length个字符写入到输出流。<br>void write(String string, int offset, int length);
-</em>关闭流释放内存资源。<br>void close() throws IOException<br>*将输出流中缓冲的数据全部写出到目的地。<br>void flush() throws IOException</p>
-<h3 id="四、读写文本文件"><a href="#四、读写文本文件" class="headerlink" title="四、读写文本文件"></a>四、读写文本文件</h3><p><strong>(1).写文本文件</strong><br>1.FileWriter是继承writer类，可调用write()方法往文本中写入内容。下面程序为调用FileWriter类的write(type c)方法的实现:</p>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">String</span> fileName=<span class="string">"d:\\demo1.txt"</span>;</div><div class="line">FileWriter <span class="built_in">write</span>=<span class="keyword">new</span> FileWriter(fileName);</div><div class="line"><span class="built_in">write</span>.<span class="built_in">write</span>(<span class="string">"hell,io\n"</span>);</div><div class="line"><span class="built_in">write</span>.<span class="built_in">write</span>(<span class="string">"welcome to study\n"</span>);</div><div class="line"><span class="built_in">write</span>.<span class="built_in">write</span>(<span class="string">"加油，谢谢！"</span>);</div><div class="line"><span class="built_in">write</span>.<span class="built_in">close</span>();</div></pre></td></tr></table></figure>
-<p>2.BufferedWriter类是带缓冲区的，比FileWriter要高效些，若写入的内容多优先使用此类，此类有一个newLine()方法，可换行。<br>下面程序为BufferedWriter类write(type c)方法的实现:</p>
-<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//处理内容较多的数据是，用BufferedWriter更高效</span></div><div class="line">BufferedWriter bWrite=<span class="keyword">new</span> <span class="type">BufferedWriter</span>(<span class="keyword">new</span> <span class="type">FileWriter</span>(fileName));</div><div class="line">bWrite.write(<span class="string">"hell,io"</span>);</div><div class="line">bWrite.<span class="keyword">new</span><span class="type">Line</span>();</div><div class="line">bWrite.write(<span class="string">"welcome to study"</span>);</div><div class="line">bWrite.<span class="keyword">new</span><span class="type">Line</span>();</div><div class="line">bWrite.write(<span class="string">"加油，谢谢！"</span>);</div><div class="line">bWrite.close();</div></pre></td></tr></table></figure>
-<p>不论使用哪种方式，结束时都需要close()关闭流，否则会导致资源耗尽问题。<br><strong>(2).读文本文件</strong><br>1.FileReader类是从文本文件读取字符，下面代码为FileReader类读取文本文件的实现，返回的是一个int类型数。若读取到末尾，则返回-1，下面为具体的实现:</p>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">FileReader <span class="built_in">read</span>=<span class="keyword">new</span> FileReader(fileName);</div><div class="line"><span class="keyword">int</span> len=<span class="built_in">read</span>.<span class="built_in">read</span>();</div><div class="line"><span class="built_in">while</span>(len!=<span class="number">-1</span>)&#123;</div><div class="line">	System.out.<span class="built_in">println</span>(<span class="string">"len:"</span>+len);</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<p>2.BufferedReader类是文本文件读取的缓存器类，调用readLine()方法，可一行一行的读取出整行字符，若读取到末尾返回null,下面为具体的实现:</p>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">BufferedReader <span class="built_in">read</span>=<span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(fileName));</div><div class="line"><span class="keyword">String</span> <span class="built_in">line</span>=<span class="built_in">read</span>.readLine();</div><div class="line"><span class="built_in">while</span>(<span class="built_in">line</span>!=null)&#123;</div><div class="line">	System.out.<span class="built_in">println</span>(<span class="string">"line:"</span>+<span class="built_in">line</span>);</div><div class="line">	<span class="built_in">line</span>=<span class="built_in">read</span>.readLine();</div><div class="line">&#125;</div><div class="line"><span class="built_in">read</span>.<span class="built_in">close</span>();</div></pre></td></tr></table></figure>
-<p>同时不论使用哪种方式，结束时都需要调用close()关闭流，否则会导致资源耗尽问题.</p>
-<h3 id="五、读写二进制数据"><a href="#五、读写二进制数据" class="headerlink" title="五、读写二进制数据"></a>五、读写二进制数据</h3><p>对于纯文本文件里的内容都可解释为字符，可以用Reader和writer进行读写，但对于那些图片，声音的不是纯文本的内容，则需要利用二进制的字节方式进行读写，利用二进制字节读取数据要比字符快，且编码问题小。<br><strong>(1).写二进制字节数据</strong><br>FileOutputStream类:用于字节的输出；DataOutputStream类:用于将数据写到另一个输出流。下面为具体的实现:</p>
-<figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">DataOutputStream <span class="keyword">out</span> =<span class="keyword">new</span> DataOutputStream(<span class="keyword">new</span> FileOutputStream(fileName));</div><div class="line"><span class="keyword">out</span>.writeInt(<span class="number">1</span>);</div><div class="line"><span class="keyword">out</span>.writeDouble(<span class="number">11.20</span>);</div><div class="line"><span class="keyword">out</span>.writeUTF(<span class="string">"test"</span>);</div><div class="line"><span class="keyword">out</span>.close();</div></pre></td></tr></table></figure>
-<p><strong>(2).读二进制文件</strong></p>
-<p>通过另外一个流来构造一个过滤流，常用的子类有<br>DataInputStream 和 BufferedInputStream。后者是将字节数据读取到缓冲区.相对要高效些。下面为具体的实现:</p>
-<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">String</span> fileName=<span class="string">"d:\\demo.dat"</span>;</div><div class="line">DataInputStream <span class="keyword">in</span>=<span class="keyword">new</span><span class="type"></span>	DataInputStream(<span class="keyword">new</span> <span class="type">BufferedInputStream</span>(<span class="keyword">new</span> <span class="type">FileInputStream</span>(fileName)));</div><div class="line">System.out.println(<span class="keyword">in</span>.readInt()+<span class="string">"-"</span>+<span class="keyword">in</span>.readDouble()+<span class="string">"-"</span>+<span class="keyword">in</span>.readUTF());</div><div class="line"><span class="keyword">in</span>.close();</div></pre></td></tr></table></figure>
-<p>还有几个特殊的类,如:<br>LineNumberInputStream:构造一个读取指定的输入流的输入​​的新行号输入流。<br>PushbackInputStream:构建一个可预览一个字节或具有指定尺寸的缓冲区的流。<br>总结：本文主要分析了流的作用，流的分类，流的类图结构以及流的一些操作，比较基础，下篇将介绍流的文件管理，文档的压缩和对象序列化等操作。</p>
+        <p>继承是面向对象的一个重要特性，子类继承超类的方法和属性，可以使代码通用性强，封装性好。java中继承不支持多继承。下面分析继承的使用:<br><a id="more"></a><br><strong>一、类，超类和子类</strong><br>    继承是子类继承父类的属性和方法，比如在同一公司中，经理和普通职员存在待遇存在差异，比如他们都每月领取自己的薪水，而经理又会领到奖金。<br>    则这可以用继承的概念去构造，子类也能去定义有差异的属性和方法。继承的格式是由关键字extends表示<br>    如 class Employee extends Manager{<br>        //属性和方法<br>    }<br>    通过extends 在已存在的类上派生出一个新类。已存在的类被称为超类，基类或父类，新类被称为派生类，子类。超类并不比子类存在更多的功能<br>    1.子类可扩展超类没有的方法。<br>    2.通用的方法常封装在父类中定义。<br>    3.子类可以增加域，增加方法或覆盖父类的方法，但不能删除继承父类的域和方法。<br>    super关键字:是指向父类的，可以拥有调用父类的属性和方法,如super(name)调用父类具有相同参数的构造器。<br>    下面用如下几个方面继承中的几个概念：<br>    <strong>1.继承层次</strong><br>    继承不只局限于一个层次，也可以多层次继承，有一个公共类派生出所有类的集合被称为继承的层次。<br>    java不支持多继承。<br>    <strong>2.多态</strong><br>    多态是指一个类可以有多种对象的引用，子类的每个对象也可是超类的对象，比如<br>    Employee e=new Employee();<br>    Employee e=new Manager(); 说明e即可父类Employee的引用，也是子类Manager的引用。<br>    <strong>3.动态绑定</strong><br>    动态绑定是一种很重要的特性，可以在无须修改现存代码的基础上对程序进行扩展，比如生成一个新类B,变量e持有类B的引用，则对类中的非final,private,static修饰的方法，变量e都可调用。<br>    <strong>4.阻止继承</strong><br>     父类中若有些方法不想被子类去继承，则可用final修饰，被称为不可扩展类。定义形式如下:<br>     final class Manager extends Employee{<br>     }<br>     类中的方法也可被修饰成final类.且此方法无法被继承。如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Employee</span></span>&#123;</div><div class="line">	 <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	  &#125;</div></pre></td></tr></table></figure>
+<p><strong>5.抽象类</strong><br>java中抽象是一个很重要的概念，抽象类和抽象方法的具体实现在其子类中，扩展抽象的方法有如下方式<br>1.在子类中定义部分抽象方法或不定义抽象方法，则子类必须定义为抽象类。<br>2.在子类定义全部的抽象方法，则子类不需要定义为抽象类。<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Person</span> &#123;</div><div class="line">	<span class="keyword">private</span> String name;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Person</span>(<span class="params">String name</span>)</span>&#123;</div><div class="line">		<span class="keyword">this</span>.name=name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getDescription</span>(<span class="params"></span>)</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Employee</span><span class="params">(String name,<span class="keyword">double</span> s,<span class="keyword">int</span> year,<span class="keyword">int</span> month,<span class="keyword">int</span> day)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(name);</div><div class="line">		salary=s;</div><div class="line">		GregorianCalendar calendar=<span class="keyword">new</span> GregorianCalendar(year, month<span class="number">-1</span>, day);</div><div class="line">		hday=calendar.getTime();</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> <span class="function">String <span class="title">getDescription</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="function"><span class="keyword">return</span> String.<span class="title">format</span><span class="params">(<span class="string">" an employee salry is $%.2f"</span>, salary)</span></span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">private</span>  <span class="keyword">double</span> salary;</div><div class="line">	<span class="keyword">private</span> Date hday;</div><div class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">double</span> <span class="title">getSalary</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> salary;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">public</span> <span class="function">Date <span class="title">getHday</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> hday;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>6.受保护访问</strong><br>在类中常将属性修饰为private，方法修饰为public 可让子类不能访问超类中的私有属性。然而有时候超类的中的某个属性能被子类访问。<br>则可将此属性修饰为protected.如Employee的name属性被protected修饰，子类可访问该属性，而不能访问其他属性。<br>java中常用于控制可见性的4个修饰符:<br>对本类可见-private<br>对所有类可见-public<br>对本包和所有子类可见-protected<br>对本包可见-默认修饰符</p>
+<p><strong>二、Object-所有类的超类</strong><br>Object类所有java类的祖先，java中每个类都是由它扩展而来。如除基本类型不是对象，字符，布尔类型等都不是对象，所有数组类型，包括基本类型与对象数组都扩展于Object.<br>Object中几个比较重要的方法，如equals,HashCode()和toString()等方法<br>1.equals()是检测一个对象是否与另一个对象相同，在Object中，用于判断两个对象的引用是否相同，若引用相同，则认为两个对象是相等的。<br>2.hashCode()方法是基于散列码，散列码是对象导出的一个整型值，若x,y是两个不同的对象，则x.hashCode()与y.hashCode()基本不会相同。<br>  Equals()与hashCode()的定义必须一致，如x.equals(y)返回true,则x.hashCode()与y.hashCode()就必须有相同的值。</p>
+<p>3.toString()返回对象值的字符串<br>如 public string toString(){<br>    return “Employee[name=”+name+”,salary=”+salary+”]”<br>    }<br>    或<br>public string toString(){<br>    return getClass().getName()+”[name=”+name+”,salary=”+salary+”]”<br>    }</p>
 
       
 
@@ -240,6 +209,10 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">继承</a>
         		</li>
       		
 		</ul>
@@ -306,7 +279,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://hanyuanzhen.com/2015/11/24/核心java系列——I-O流详解(一)/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://hanyuanzhen.com/2017/02/20/核心java系列——java中继承/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -320,18 +293,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2015/11/27/git教程详解（一）/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/02/24/核心java系列——I-O流详解(一)/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          git教程详解（一）
+          核心java系列——I/O流详解（一）
         
       </div>
     </a>
   
   
-    <a href="/2015/11/24/核心java系列——异常处理机制/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">核心java系列——异常处理机制</div>
+    <a href="/2017/01/01/核心java系列——线程（二）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">核心java系列——线程（二）</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -345,7 +318,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="核心java系列——I-O流详解(一)" data-title="核心java系列——I/O流详解（一）" data-url="http://hanyuanzhen.com/2015/11/24/核心java系列——I-O流详解(一)/"></div>
+	<div class="ds-thread" data-thread-key="核心java系列——java中继承" data-title="核心java系列——java的继承" data-url="http://hanyuanzhen.com/2017/02/20/核心java系列——java中继承/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -445,26 +418,6 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">版本控制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ant</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">web开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hiberante</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">图像裁剪</a>
               </li>
              
@@ -473,7 +426,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SVN</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">web开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -486,6 +443,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">AIXS2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SVN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">版本控制</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -518,6 +483,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目构建</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hiberante</a>
               </li>
              
               <li class="article-tag-list-item">

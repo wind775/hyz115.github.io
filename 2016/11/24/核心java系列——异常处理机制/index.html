@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hanyuanzhen.com">
-  <title>Ant之build.xml分析 | 韩元桢博客</title>
+  <title>核心java系列——异常处理机制 | 韩元桢博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="可能有些读者并不连接什么是Ant以及入可使用它，但只要使用通过Linux系统得读者，应该知道make这个命令。当编译Linux内核及一些软件的源程序时，经常要用这个命令。Make命令其实就是一个项目管理工具，而Ant所实现功能与此类似。像make，gnumake和nmake这些编译工具都有一定的缺陷，但是Ant却克服了这些工具的缺陷。最初Ant开发者在开发跨平台的应用时，用样也是基于这些缺陷对A">
+  <meta name="description" content="异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ant之build.xml分析">
-<meta property="og:url" content="http://hanyuanzhen.com/2015/01/15/Ant之build.xml分析/index.html">
+<meta property="og:title" content="核心java系列——异常处理机制">
+<meta property="og:url" content="http://hanyuanzhen.com/2016/11/24/核心java系列——异常处理机制/index.html">
 <meta property="og:site_name" content="韩元桢博客">
-<meta property="og:description" content="可能有些读者并不连接什么是Ant以及入可使用它，但只要使用通过Linux系统得读者，应该知道make这个命令。当编译Linux内核及一些软件的源程序时，经常要用这个命令。Make命令其实就是一个项目管理工具，而Ant所实现功能与此类似。像make，gnumake和nmake这些编译工具都有一定的缺陷，但是Ant却克服了这些工具的缺陷。最初Ant开发者在开发跨平台的应用时，用样也是基于这些缺陷对A">
-<meta property="og:updated_time" content="2017-03-11T13:10:27.000Z">
+<meta property="og:description" content="异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。">
+<meta property="og:image" content="http://img.blog.csdn.net/20151124185612756">
+<meta property="og:updated_time" content="2017-03-28T03:41:20.846Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ant之build.xml分析">
-<meta name="twitter:description" content="可能有些读者并不连接什么是Ant以及入可使用它，但只要使用通过Linux系统得读者，应该知道make这个命令。当编译Linux内核及一些软件的源程序时，经常要用这个命令。Make命令其实就是一个项目管理工具，而Ant所实现功能与此类似。像make，gnumake和nmake这些编译工具都有一定的缺陷，但是Ant却克服了这些工具的缺陷。最初Ant开发者在开发跨平台的应用时，用样也是基于这些缺陷对A">
+<meta name="twitter:title" content="核心java系列——异常处理机制">
+<meta name="twitter:description" content="异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20151124185612756">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -147,51 +149,43 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Ant之build.xml分析" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-核心java系列——异常处理机制" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Ant之build.xml分析
+      核心java系列——异常处理机制
     </h1>
   
 
         
-        <a href="/2015/01/15/Ant之build.xml分析/" class="archive-article-date">
-  	<time datetime="2015-01-15T13:14:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-01-15</time>
+        <a href="/2016/11/24/核心java系列——异常处理机制/" class="archive-article-date">
+  	<time datetime="2016-11-24T11:45:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-24</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>可能有些读者并不连接什么是Ant以及入可使用它，但只要使用通过Linux系统得读者，应该知道make这个命令。当编译Linux内核及一些软件的源程序时，经常要用这个命令。Make命令其实就是一个项目管理工具，而Ant所实现功能与此类似。像make，gnumake和nmake这些编译工具都有一定的缺陷，但是Ant却克服了这些工具的缺陷。最初Ant开发者在开发跨平台的应用时，用样也是基于这些缺陷对Ant做了更好的设计。<br><a id="more"></a></p>
-<h3 id="Ant的概念"><a href="#Ant的概念" class="headerlink" title="Ant的概念"></a><strong>Ant的概念</strong></h3><p>可能有些读者并不连接什么是Ant以及入可使用它，但只要使用通过Linux系统得读者，应该知道make这个命令。当编译Linux内核及一些软件的源程序时，经常要用这个命令。Make命令其实就是一个项目管理工具，而Ant所实现功能与此类似。像make，gnumake和nmake这些编译工具都有一定的缺陷，但是Ant却克服了这些工具的缺陷。最初Ant开发者在开发跨平台的应用时，用样也是基于这些缺陷对Ant做了更好的设计。 </p>
+        <p>异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。<br><a id="more"></a></p>
+<h3 id="一、什么是异常"><a href="#一、什么是异常" class="headerlink" title="一、什么是异常"></a><strong>一、什么是异常</strong></h3><blockquote>
+<p>异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。</p>
 </blockquote>
-<h3 id="Ant-与-makefile"><a href="#Ant-与-makefile" class="headerlink" title="Ant 与 makefile"></a><strong>Ant 与 makefile</strong></h3><p>Makefile有一些不足之处，比如很多人都会碰到的烦人的Tab问题。最初的Ant开发者多次强调”只是我在Tab前面加了一个空格，所以我的命令就不能执行”。有一些工具在一定程度上解决了这个问题，但还是有很多其他的问题。Ant则与一般基于命令的工具有所不同，它是Java类的扩展。Ant运行需要的XML格式的文件不是Shell命令文件。它是由一个Project组成的，而一个Project又可分成可多target，target再细分又分成很多task，每一个task都是通过一个实现特定接口的java类来完成的。 </p>
-<h3 id="Ant的优点"><a href="#Ant的优点" class="headerlink" title="Ant的优点"></a><strong>Ant的优点</strong></h3><p>Ant是Apache软件基金会JAKARTA目录中的一个子项目，它有以下的优点。跨平台性。Ant是存Java语言编写的，所示具有很好的跨平台性。操作简单。Ant是由一个内置任务和可选任务组成的。Ant运行时需要一个XML文件(构建文件)。Ant通过调用target树，就可以执行各种task。每个task实现了特定接口对象。由于Ant构建文件时XML格式的文件，所以和容易维护和书写，而且结构很清晰。Ant可以集成到开发环境中。由于Ant的跨平台性和操作简单的特点，它很容易集成到一些开发环境中去。 </p>
-<p>Ant 开发Ant的构建文件当开始一个新的项目时，首先应该编写Ant构建文件。构建文件定义了构建过程，并被团队开发中每个人使用。Ant构建文件默认命名为build.xml，也可以取其他的名字。只不过在运行的时候把这个命名当作参数传给Ant。构建文件可以放在任何的位置。一般做法是放在项目顶层目录中，这样可以保持项目的简洁和清晰。下面是一个典型的项目层次结构。<br>(1) src存放文件。<br>(2) class存放编译后的文件。<br>(3) lib存放第三方JAR包。<br>(4) dist存放打包，发布以后的代码。<br>Ant构建文件是XML文件。每个构建文件定义一个唯一的项目(Project元素)。每个项目下可以定义很多目标(target元素)，这些目标之间可以有依赖关系。当执行这类目标时，需要执行他们所依赖的目标。每个目标中可以定义多个任务，目标中还定义了所要执行的任务序列。Ant在构建目标时必须调用所定义的任务。任务定义了Ant实际执行的命令。Ant中的任务可以为3类。<br>(1) 核心任务。核心任务是Ant自带的任务。<br>(2) 可选任务。可选任务实来自第三方的任务，因此需要一个附加的JAR文件。<br>(3) 用户自定义的任务。用户自定义的任务实用户自己开发的任务。 </p>
-<p><strong>1.project标签</strong><br>每个构建文件对应一个项目。<project>标签时构建文件的根标签。它可以有多个内在属性，就如代码中所示，其各个属性的含义分别如下。<br>(1) default表示默认的运行目标，这个属性是必须的。<br>(2) basedir表示项目的基准目录。<br>(3) name表示项目名。<br>(4) description表示项目的描述。<br>每个构建文件都对应于一个项目，但是大型项目经常包含大量的子项目，每一个子项目都可以有自己的构建文件。 </project></p>
-<p><strong>2.target标签</strong><br>一个项目标签下可以有一个或多个target标签。一个target标签可以依赖其他的target标签。例如，有一个target用于编译程序，另一个target用于声称可执行文件。在生成可执行文件之前必须先编译该文件，因策可执行文件的target依赖于编译程序的target。Target的所有属性如下。<br>(1) name表示标明，这个属性是必须的。<br>(2) depends表示依赖的目标。<br>(3) if表示仅当属性设置时才执行。<br>(4) unless表示当属性没有设置时才执行。<br>(5) description表示项目的描述。<br>Ant的depends属性指定了target的执行顺序。Ant会依照depends属性中target出现顺序依次执行每个target。在执行之前，首先需要执行它所依赖的target。程序中的名为run的target的depends属性compile，而名为compile的target的depends属性是prepare，所以这几个target执行的顺序是prepare-&gt;compile-&gt;run。一个target只能被执行一次，即使有多个target依赖于它。如果没有if或unless属性，target总会被执行。 </p>
-<p><strong>3.mkdir标签</strong><br>该标签用于创建一个目录，它有一个属性dir用来指定所创建的目录名，其代码如下：<code>&lt;mkdir dir=”＄{class.root}”/&gt;</code>通过以上代码就创建了一个目录，这个目录已经被前面的property标签所指定。 </p>
-<p><strong>4.jar标签</strong><br>该标签用来生成一个JAR文件，其属性如下。<br>(1) destfile表示JAR文件名。<br>(2) basedir表示被归档的文件名。<br>(3) includes表示别归档的文件模式。<br>(4) exchudes表示被排除的文件模式。 </p>
-<p><strong>5．javac标签</strong><br>该标签用于编译一个或一组java文件，其属性如下:<br>(1).srcdir表示源程序的目录。<br>(2).destdir表示class文件的输出目录。<br>(3).include表示被编译的文件的模式。<br>(4).excludes表示被排除的文件的模式。<br>(5).classpath表示所使用的类路径。<br>(6).debug表示包含的调试信息。<br>(7).optimize表示是否使用优化。<br>(8).verbose 表示提供详细的输出信息。<br>(9).fileonerror表示当碰到错误就自动停止。 </p>
-<p><strong>6．java标签</strong><br>该标签用来执行编译生成的.class文件，其属性如下。<br>(1).classname 表示将执行的类名。<br>(2).jar表示包含该类的JAR文件名。<br>(3).classpath所表示用到的类路径。<br>(4).fork表示在一个新的虚拟机中运行该类。<br>(5).failonerror表示当出现错误时自动停止。<br>(6).output 表示输出文件。<br>(7).append表示追加或者覆盖默认文件。 </p>
-<p><strong>7.delete标签</strong><br>该标签用于删除一个文件或一组文件，去属性如下:<br>(1).file表示要删除的文件。<br>(2).dir表示要删除的目录。<br>(3).includeEmptyDirs 表示指定是否要删除空目录，默认值是删除。<br>(4).failonerror 表示指定当碰到错误是否停止，默认值是自动停止。<br>(5).verbose表示指定是否列出所删除的文件，默认值为不列出。 </p>
-<p><strong>8.copy标签</strong><br>该标签用于文件或文件集的拷贝，其属性如下。<br>(1).file 表示源文件。<br>(2).tofile 表示目标文件。<br>(3).todir 表示目标目录。<br>(4).overwrite 表示指定是否覆盖目标文件，默认值是不覆盖。<br>(5).includeEmptyDirs 表示制定是否拷贝空目录，默认值为拷贝。<br>(6).failonerror 表示指定如目标没有发现是否自动停止，默认值是停止。<br>(7).verbose 表示制定是否显示详细信息，默认值不显示。 </p>
-<h3 id="Ant的数据类型"><a href="#Ant的数据类型" class="headerlink" title="Ant的数据类型"></a><strong>Ant的数据类型</strong></h3><p>在构建文件中为了标识文件或文件组，经常需要使用数据类型。数据类型包含在<br>org.apache.tool.ant.types包中。下面简单介绍构建文件中一些常用的数据类型。 </p>
-<p><strong>1. argument 类型</strong><br>由Ant构建文件调用的程序，可以通过<code>&lt;arg&gt;</code>元素向其传递命令行参数，如apply,exec和java任务均可接受嵌套<code>&lt;arg&gt;</code>元素，可以为各自的过程调用指定参数。以下是<code>&lt;arg&gt;</code>的所有属性。<br>(1).values 是一个命令参数。如果参数种有空格，但又想将它作为单独一个值，则使用此属性。<br>(2).file表示一个参数的文件名。在构建文件中，此文件名相对于当前的工作目录。<br>(3).line表示用空格分隔的多个参数列表。<br>(4).path表示路径。 </p>
-<p><strong>2.ervironment 类型</strong><br>由Ant构建文件调用的外部命令或程序，<code>&lt;env&gt;</code>元素制定了哪些环境变量要传递给正在执行的系统命令，<code>&lt;env&gt;</code>元素可以接受以下属性。<br>(1).file表示环境变量值得文件名。此文件名要被转换位一个绝对路径。<br>(2).path表示环境变量的路径。Ant会将它转换为一个本地约定。<br>(3).value 表示环境变量的一个直接变量。<br>(4).key 表示环境变量名。<br>注意  file path 或 value只能取一个。 </p>
-<p><strong>3.filelist类型</strong><br>Filelist 是一个支持命名的文件列表的数据类型，包含在一个filelist类型中的文件不一定是存在的文件。以下是其所有的属性。<br>(1).dir是用于计算绝对文件名的目录。<br>(2).files 是用逗号分隔的文件名列表。<br>(3).refid 是对某处定义的一个<code>&lt;filelist&gt;</code>的引用。<br>注意  dir 和 files 都是必要的，除非指定了refid(这种情况下，dir和files都不允许使用)。 </p>
-<p><strong>4.fileset类型</strong><br>Fileset 数据类型定义了一组文件，并通常表示为<code>&lt;fileset&gt;</code>元素。不过，许多ant任务构建成了隐式的fileset,这说明他们支持所有的fileset属性和嵌套元素。以下为fileset 的属性列表。<br>(1).dir表示fileset 的基目录。<br>(2).casesensitive的值如果为false，那么匹配文件名时，fileset不是区分大小写的，其默认值为true。<br>(3).defaultexcludes 用来确定是否使用默认的排除模式，默认为true。<br>(4).excludes 是用逗号分隔的需要派出的文件模式列表。<br>(5).excludesfile 表示每行包含一个排除模式的文件的文件名。<br>(6).includes 是用逗号分隔的，需要包含的文件模式列表。<br>(7).includesfile 表示每行包括一个包含模式的文件名。 </p>
-<p><strong>5.patternset 类型</strong><br>Fileset 是对文件的分组，而patternset是对模式的分组，他们是紧密相关的概念。<code>&lt;patternset&gt;</code>支持4个属性：includes excludex includexfile 和 excludesfile,与fileset相同。Patternset 还允许以下嵌套元素：include,exclude,includefile 和 excludesfile。 </p>
-<p><strong>6.filterset 类型</strong><br>Filterset定义了一组过滤器，这些过滤器将在文件移动或复制时完成文件的文本替换。<br>主要属性如下：<br>(1).begintoken 表示嵌套过滤器所搜索的记号，这是标识其开始的字符串。<br>(2).endtoken表示嵌套过滤器所搜索的记号这是标识其结束的字符串。<br>(3).id是过滤器的唯一标志符。<br>(4).refid是对构建文件中某处定义一个过滤器的引用。 </p>
-<p><strong>7.Path类型</strong><br>Path元素用来表示一个类路径，不过它还可以用于表示其他的路径。在用作揖个属性时，路经中的各项用分号或冒号隔开。在构建的时候，此分隔符将代替当前平台中所有的路径分隔符，其拥有的属性如下。<br>(1).location 表示一个文件或目录。Ant在内部将此扩展为一个绝对路径。<br>(2).refid 是对当前构建文件中某处定义的一个path的引用。<br>(3).path表示一个文件或路径名列表。 </p>
-<p><strong>8.mapper类型</strong><br>Mapper类型定义了一组输入文件和一组输出文件间的关系，其属性如下。<br>(1).classname 表示实现mapper类的类名。当内置mapper不满足要求时，用于创建定制mapper。<br>(2).classpath表示查找一个定制mapper时所用的类型路径。<br>(3).classpathref是对某处定义的一个类路径的引用。<br>(4).from属性的含义取决于所用的mapper。<br>(5).to属性的含义取决于所用的mapper。<br>(6).type属性的取值为identity，flatten glob merge  regexp  其中之一，它定义了要是用的内置mapper的类型。 </p>
-<h3 id="Ant-的运行"><a href="#Ant-的运行" class="headerlink" title="Ant 的运行"></a><strong>Ant 的运行</strong></h3><p>安装好Ant并且配置好路径之后，在命令行中切换到构建文件的目录，输入Ant命令就可以运行Ant.若没有指定任何参数，Ant会在当前目录下查询build.xml文件。如果找到了就用该文件作为构建文件。如果使用了 –find 选项，Ant 就会在上级目录中找构建文件，直至到达文件系统得跟目录。如果构建文件的名字不是build.xml ，则Ant运行的时候就可以使用 –buildfile file,这里file 指定了要使用的构建文件的名称，示例如下：<br>Ant如下说明了表示当前目录的构建文件为build.xml 运行 ant 执行默认的目标。<br>Ant –buildfile  test.xml使用当前目录下的test.xml 文件运行Ant ,执行默认的目标</p>
+<p>####（1）.异常分类<br>java语言中，定义了许多的异常类，所有异常类都派生Throwable类，而Throwable类又有两个子类Error和Exception，分别表示错误和异常，<br>其中Exception又分为运行时异常和非运行时异常。下面为异常的体系结构图：<br><img src="http://img.blog.csdn.net/20151124185612756" alt="这里写图片描述"></p>
+<p>####（2）.下面将详细说明图中相关异常的区别和联系<br><strong>1.Error和Exception</strong><br>  Error是程序无法处理的错误，通常有内存溢出异常(outofMemoryError)，线程终止等，出现这类异常java虚拟机会选择终止程序。<br> Exception是程序可处理的异常，它又有两个分支运行时异常和非运行时异常，出现这类异常是程序需要处理。<br><strong>2.运行时异常和非运行时异常</strong><br> 运行时异常都是RuntimeException类及其子类异常，如NullPointerException、 IndexOutOfBoundsException等，这些异常是不检查异常，程序中可以选择捕获处理，也可以不处理。这些异常一般是由程序逻辑错误引 起的，程序应该从逻辑角度尽可能避免这类异常的发生。<br> 非运行时异常是RuntimeException以外的异常，类型上都属于Exception类及其子类。从程序语法角度讲是必须进行处理的异常，<br>如果不处理，程序就不能编译通过。如IOException、SQLException等以及用户自定义的Exception异常。</p>
+<h4 id="3-什么时候抛出异常"><a href="#3-什么时候抛出异常" class="headerlink" title="(3).什么时候抛出异常"></a>(3).什么时候抛出异常</h4><p>如果遇到无法处理的问题时，该方法可以选择抛出异常，至于何时需要在方法中用throws声明异常，若该方法需要抛出多个异常，则每个异常间用逗号分隔，通常有以下情况需要抛出异常：<br>1.调用一个已抛出异常的方法，如FileInputStream构造器。<br>2.程序运行过程错误，并用throw抛出一个检查出的异常。<br>3.程序出现错误。<br>4.java虚拟机和运行时库出现的内部异常。<br>总之一个方法必须声明所有可能抛出的异常已检查异常，所有未检查出的异常要么不可控制，要么就应该避免发生。</p>
+<h4 id="4-创建异常"><a href="#4-创建异常" class="headerlink" title="(4).创建异常"></a>(4).创建异常</h4><p>创建异常通常只需要定义派生于Exception类或派生于Exception子类的类。例如定义一个派生于IOException的类，通常定义两个构造器，一个是默认构造器，一个是带有详细描述信息的构造器。如:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyExcetion</span> <span class="keyword">extends</span> <span class="title">IOException</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyExcetion</span><span class="params">()</span> </span>&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyExcetion</span><span class="params">(String message)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(message);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyExcetion</span><span class="params">(Throwable cause)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(cause);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyExcetion</span><span class="params">(String message, Throwable cause)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(message, cause);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="二、异常处理"><a href="#二、异常处理" class="headerlink" title="二、异常处理"></a><strong>二、异常处理</strong></h3><p>程序运行过程中，若出现异常没有及时处理，则会终止程序的执行。可以用捕获异常或抛出异常来处理。<br>若try语句代码块出现异常，程序会在catch中寻找匹配的异常，然后调用匹配的异常处理器进行处理。运行过程中程序未找到匹配的异常处理器，程序就会终止。<br><strong>(1).try…catch模式</strong><br>该模式的定义形式如下<br>try{<br>  代码块；<br>  }catch(Exception e){<br>  }<br>  Catch(Exception e2){ }</p>
+<p>匹配的原则是：如果抛出的异常对象属于catch子句的异常类，或者属于该异常类的子类，则认为生成的异常对象与catch块捕获的异常类型相匹。<br><strong>(2).try…catch…finally模式</strong><br>该模包含finally,无论程序有无异常发生，且不管try –catch间是否顺利执行，都会执行finally语句。<br><strong>(3).实例说明：</strong><br>1.各模块的作用<br>try块:用于捕获异常，后面可以跟一个或多个catch，finally可有可无，但必须有一个catch块。<br>catch块:用于处理异常。<br>finally块是程序是否有无异常，都需要执行的部分。<br>但在以下3中特殊情况下不会执行：<br>A．在finally 语句中发生异常。<br>B．程序所在线程死亡。<br>C．在前面的代码中出现了system.exit()退出程序。<br>2.当捕获到一个异常对象之后，你可以调用其getMessage()方法来获取异常消息，或者调用printStackTrace()方法来打印执行栈的内容<br>关于getMessage()方法<br>当你通过new Exception(“message”)或new RuntimeException(“message”)来创建一个异常对象的时候，传给构造方法的这个参数就是消息，所以，当你捕获到异常对象之后，可以通过getMessage()方法把消息拿出来！<br>关于printStackTrace()方法它能把执行栈的内容打印出来</p>
+<h3 id="三、异常的转换"><a href="#三、异常的转换" class="headerlink" title="三、异常的转换"></a><strong>三、异常的转换</strong></h3><p>所谓异常转换，即截获一个异常（往往是checked exception）之后，将其转换为另外一个异常（往往是unchecked exception）抛出。<br>比如很多情况下，当我们操作数据库的时候或操作文件的时候，JDK类库中的相关操作方法会给我们抛出SQLException或IOException，这些都是checked exception，这些异常一般情况下我们是无法进行处理的，所以，我们需要继续向上抛出异常，假如我们继续抛出SQLException或IOException的话，会导致更上层的程序处理起来非常困难（而且也需要在方法中进行声明）。<br>因此，大多数情况下，我们在截获到SQLException或IOException之后，会将它转换为一种RuntimeException重新抛出，这是非常常见的异常应用技巧！</p>
+<h3 id="四、异常链"><a href="#四、异常链" class="headerlink" title="四、异常链"></a><strong>四、异常链</strong></h3><p>所谓异常链，即当我们在截获一个异常，在把它转换为另外一个异常的时候，记得把原来那个异常对象设置到新的异常对象中即可。我们不妨观察Throwable类（所有异常类的基类）的构造方法:<br>public Throwable()<br>public Throwable(String message)<br>public Throwable(String message, Throwable cause)<br>public Throwable(Throwable cause)<br>我们注意到其中的Throwable类型的参数，它就是用来创建异常链的。<br>下面使用一个实例来说明:<br><strong>1.自定义异常类：</strong></p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword"><span class="keyword">extends</span> <span class="type">RuntimeException</span></span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> final long serialVersionUID = <span class="number">1</span>L;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> errorCode;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> MyException() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> MyException(<span class="keyword">String</span> message,<span class="keyword">String</span> errorCode) &#123;</div><div class="line">		<span class="keyword">super</span>(message);</div><div class="line">		<span class="built_in">this</span>.errorCode=errorCode;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//用于创建异常链</span></div><div class="line">	<span class="keyword">public</span> MyException(<span class="keyword">String</span> message,<span class="keyword">String</span> errorCode,Throwable cause) &#123;</div><div class="line">		<span class="keyword">super</span>(message, cause);</div><div class="line">		<span class="built_in">this</span>.errorCode=errorCode;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">String</span> getErrorCode() &#123;</div><div class="line">		<span class="keyword">return</span> errorCode;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>2.调用该类</strong></p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUtils</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> readFile(<span class="keyword">String</span> filePath)&#123;</div><div class="line">		StringBuffer sb=<span class="keyword">new</span> <span class="type">StringBuffer</span>();</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			BufferedReader reader=<span class="keyword">new</span> <span class="type">BufferedReader</span>(<span class="keyword">new</span> <span class="type">FileReader</span>(filePath));</div><div class="line">			<span class="keyword">String</span> line=<span class="literal">null</span>;</div><div class="line">			<span class="keyword">while</span>((line=reader.readLine())!=<span class="literal">null</span>)&#123;</div><div class="line">				sb.append(line);</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</div><div class="line">			<span class="comment">//将原始对象放到新对象中去</span></div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">MyException</span>(<span class="string">"文件没有找到！"</span>, <span class="string">"1"</span>, e);</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">MyException</span>(<span class="string">"文件读取有误！"</span>, <span class="string">"2"</span>, e);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> sb.toString();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="五、注意事项"><a href="#五、注意事项" class="headerlink" title="五、注意事项"></a><strong>五、注意事项</strong></h3><p>1)  必须在 try 之后添加 catch 或 finally 块。try 块后可同时接 catch 和 finally 块，但至少有一个块。<br>2) 必须遵循块顺序：若代码同时使用 catch 和 finally 块，则必须将 catch 块放在 try 块之后。<br>3) 一个 try 块可能有多个 catch 块。若如此，则执行第一个匹配块<br>即Java虚拟机会把实际抛出的异常对象依次和各个catch代码块声明的异常类型匹配，如果异常对象为某个异常类型或其子类的实例，就执行这个catch代码块，不会再执行其他的 catch代码块。<br>4) 可嵌套 try-catch-finally 结构。<br>5) 在 try-catch-finally 结构中，可重新抛出异常。<br>6)多个catch的顺序一定要遵循子类在上父类在下的规则。<br>7)一个方法被重写，被重写的方法必须抛出相同的异常或异常的子类。<br>8)若父类方法抛出多个异常，那子类重写该方法必须抛出哪些异常的一个子集。</p>
 
       
 
@@ -226,11 +220,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">版本控制</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Ant</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		
 		</ul>
@@ -242,7 +232,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/项目管理/" class="article-tag-list-link color5">项目管理</a>
+        			<a href="/categories/核心java/" class="article-tag-list-link color2">核心java</a>
         		</li>
       		
 		</ul>
@@ -297,7 +287,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://hanyuanzhen.com/2015/01/15/Ant之build.xml分析/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://hanyuanzhen.com/2016/11/24/核心java系列——异常处理机制/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -311,18 +301,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2015/02/05/python输入和输出/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/01/01/核心java系列——线程（一）/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          python输入和输出
+          核心java系列——线程（一）
         
       </div>
     </a>
   
   
-    <a href="/2014/12/27/python网络编程之UDP实现/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">python网络编程之UDP实现</div>
+    <a href="/2016/11/09/jdk源码阅读——ArrayList/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">jdk源码阅读——ArrayList</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -336,7 +326,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Ant之build.xml分析" data-title="Ant之build.xml分析" data-url="http://hanyuanzhen.com/2015/01/15/Ant之build.xml分析/"></div>
+	<div class="ds-thread" data-thread-key="核心java系列——异常处理机制" data-title="核心java系列——异常处理机制" data-url="http://hanyuanzhen.com/2016/11/24/核心java系列——异常处理机制/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -436,26 +426,6 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">版本控制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ant</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">web开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hiberante</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">图像裁剪</a>
               </li>
              
@@ -464,7 +434,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SVN</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">web开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -477,6 +451,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">AIXS2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SVN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">版本控制</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -509,6 +491,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目构建</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hiberante</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -6,20 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hanyuanzhen.com">
-  <title>核心java系列——异常处理机制 | 韩元桢博客</title>
+  <title>Archives: 2017 | 韩元桢博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="核心java系列——异常处理机制">
-<meta property="og:url" content="http://hanyuanzhen.com/2015/11/24/核心java系列——异常处理机制/index.html">
+  <meta name="description" content="韩元桢博客 技术博客 学习总结 思考感悟 知识管理">
+<meta property="og:type" content="website">
+<meta property="og:title" content="韩元桢博客">
+<meta property="og:url" content="http://hanyuanzhen.com/archives/2017/index.html">
 <meta property="og:site_name" content="韩元桢博客">
-<meta property="og:description" content="异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。">
-<meta property="og:image" content="http://img.blog.csdn.net/20151124185612756">
-<meta property="og:updated_time" content="2017-03-11T13:10:27.000Z">
+<meta property="og:description" content="韩元桢博客 技术博客 学习总结 思考感悟 知识管理">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="核心java系列——异常处理机制">
-<meta name="twitter:description" content="异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20151124185612756">
+<meta name="twitter:title" content="韩元桢博客">
+<meta name="twitter:description" content="韩元桢博客 技术博客 学习总结 思考感悟 知识管理">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -149,72 +146,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-核心java系列——异常处理机制" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      核心java系列——异常处理机制
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/03/01/核心java/" class="archive-article-date">
+  	<time datetime="2017-03-01T11:17:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/03/01/核心java/">核心java系列-抽象类和接口</a>
     </h1>
   
 
-        
-        <a href="/2015/11/24/核心java系列——异常处理机制/" class="archive-article-date">
-  	<time datetime="2015-11-24T07:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。<br><a id="more"></a></p>
-<h3 id="一、什么是异常"><a href="#一、什么是异常" class="headerlink" title="一、什么是异常"></a><strong>一、什么是异常</strong></h3><blockquote>
-<p>异常是程序中一种错误，可能是读取文件错误，网络连接错误，也可能是数组越界错误，或试图使用一个没有被赋值的对象而引起的错误。如果由于异常或错误使程序操作没有操作完成，则程序返回一个安全状态或捕获异常的处理结果，保证程序的健壮性。</p>
-</blockquote>
-<p>####（1）.异常分类<br>java语言中，定义了许多的异常类，所有异常类都派生Throwable类，而Throwable类又有两个子类Error和Exception，分别表示错误和异常，<br>其中Exception又分为运行时异常和非运行时异常。下面为异常的体系结构图：<br><img src="http://img.blog.csdn.net/20151124185612756" alt="这里写图片描述"></p>
-<p>####（2）.下面将详细说明图中相关异常的区别和联系<br><strong>1.Error和Exception</strong><br>  Error是程序无法处理的错误，通常有内存溢出异常(outofMemoryError)，线程终止等，出现这类异常java虚拟机会选择终止程序。<br> Exception是程序可处理的异常，它又有两个分支运行时异常和非运行时异常，出现这类异常是程序需要处理。<br><strong>2.运行时异常和非运行时异常</strong><br> 运行时异常都是RuntimeException类及其子类异常，如NullPointerException、 IndexOutOfBoundsException等，这些异常是不检查异常，程序中可以选择捕获处理，也可以不处理。这些异常一般是由程序逻辑错误引 起的，程序应该从逻辑角度尽可能避免这类异常的发生。<br> 非运行时异常是RuntimeException以外的异常，类型上都属于Exception类及其子类。从程序语法角度讲是必须进行处理的异常，<br>如果不处理，程序就不能编译通过。如IOException、SQLException等以及用户自定义的Exception异常。</p>
-<h4 id="3-什么时候抛出异常"><a href="#3-什么时候抛出异常" class="headerlink" title="(3).什么时候抛出异常"></a>(3).什么时候抛出异常</h4><p>如果遇到无法处理的问题时，该方法可以选择抛出异常，至于何时需要在方法中用throws声明异常，若该方法需要抛出多个异常，则每个异常间用逗号分隔，通常有以下情况需要抛出异常：<br>1.调用一个已抛出异常的方法，如FileInputStream构造器。<br>2.程序运行过程错误，并用throw抛出一个检查出的异常。<br>3.程序出现错误。<br>4.java虚拟机和运行时库出现的内部异常。<br>总之一个方法必须声明所有可能抛出的异常已检查异常，所有未检查出的异常要么不可控制，要么就应该避免发生。</p>
-<h4 id="4-创建异常"><a href="#4-创建异常" class="headerlink" title="(4).创建异常"></a>(4).创建异常</h4><p>创建异常通常只需要定义派生于Exception类或派生于Exception子类的类。例如定义一个派生于IOException的类，通常定义两个构造器，一个是默认构造器，一个是带有详细描述信息的构造器。如:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyExcetion</span> <span class="keyword">extends</span> <span class="title">IOException</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyExcetion</span><span class="params">()</span> </span>&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyExcetion</span><span class="params">(String message)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(message);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyExcetion</span><span class="params">(Throwable cause)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(cause);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyExcetion</span><span class="params">(String message, Throwable cause)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>(message, cause);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="二、异常处理"><a href="#二、异常处理" class="headerlink" title="二、异常处理"></a><strong>二、异常处理</strong></h3><p>程序运行过程中，若出现异常没有及时处理，则会终止程序的执行。可以用捕获异常或抛出异常来处理。<br>若try语句代码块出现异常，程序会在catch中寻找匹配的异常，然后调用匹配的异常处理器进行处理。运行过程中程序未找到匹配的异常处理器，程序就会终止。<br><strong>(1).try…catch模式</strong><br>该模式的定义形式如下<br>try{<br>  代码块；<br>  }catch(Exception e){<br>  }<br>  Catch(Exception e2){ }</p>
-<p>匹配的原则是：如果抛出的异常对象属于catch子句的异常类，或者属于该异常类的子类，则认为生成的异常对象与catch块捕获的异常类型相匹。<br><strong>(2).try…catch…finally模式</strong><br>该模包含finally,无论程序有无异常发生，且不管try –catch间是否顺利执行，都会执行finally语句。<br><strong>(3).实例说明：</strong><br>1.各模块的作用<br>try块:用于捕获异常，后面可以跟一个或多个catch，finally可有可无，但必须有一个catch块。<br>catch块:用于处理异常。<br>finally块是程序是否有无异常，都需要执行的部分。<br>但在以下3中特殊情况下不会执行：<br>A．在finally 语句中发生异常。<br>B．程序所在线程死亡。<br>C．在前面的代码中出现了system.exit()退出程序。<br>2.当捕获到一个异常对象之后，你可以调用其getMessage()方法来获取异常消息，或者调用printStackTrace()方法来打印执行栈的内容<br>关于getMessage()方法<br>当你通过new Exception(“message”)或new RuntimeException(“message”)来创建一个异常对象的时候，传给构造方法的这个参数就是消息，所以，当你捕获到异常对象之后，可以通过getMessage()方法把消息拿出来！<br>关于printStackTrace()方法它能把执行栈的内容打印出来</p>
-<h3 id="三、异常的转换"><a href="#三、异常的转换" class="headerlink" title="三、异常的转换"></a><strong>三、异常的转换</strong></h3><p>所谓异常转换，即截获一个异常（往往是checked exception）之后，将其转换为另外一个异常（往往是unchecked exception）抛出。<br>比如很多情况下，当我们操作数据库的时候或操作文件的时候，JDK类库中的相关操作方法会给我们抛出SQLException或IOException，这些都是checked exception，这些异常一般情况下我们是无法进行处理的，所以，我们需要继续向上抛出异常，假如我们继续抛出SQLException或IOException的话，会导致更上层的程序处理起来非常困难（而且也需要在方法中进行声明）。<br>因此，大多数情况下，我们在截获到SQLException或IOException之后，会将它转换为一种RuntimeException重新抛出，这是非常常见的异常应用技巧！</p>
-<h3 id="四、异常链"><a href="#四、异常链" class="headerlink" title="四、异常链"></a><strong>四、异常链</strong></h3><p>所谓异常链，即当我们在截获一个异常，在把它转换为另外一个异常的时候，记得把原来那个异常对象设置到新的异常对象中即可。我们不妨观察Throwable类（所有异常类的基类）的构造方法:<br>public Throwable()<br>public Throwable(String message)<br>public Throwable(String message, Throwable cause)<br>public Throwable(Throwable cause)<br>我们注意到其中的Throwable类型的参数，它就是用来创建异常链的。<br>下面使用一个实例来说明:<br><strong>1.自定义异常类：</strong></p>
-<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword"><span class="keyword">extends</span> <span class="type">RuntimeException</span></span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> final long serialVersionUID = <span class="number">1</span>L;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">String</span> errorCode;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> MyException() &#123;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> MyException(<span class="keyword">String</span> message,<span class="keyword">String</span> errorCode) &#123;</div><div class="line">		<span class="keyword">super</span>(message);</div><div class="line">		<span class="built_in">this</span>.errorCode=errorCode;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//用于创建异常链</span></div><div class="line">	<span class="keyword">public</span> MyException(<span class="keyword">String</span> message,<span class="keyword">String</span> errorCode,Throwable cause) &#123;</div><div class="line">		<span class="keyword">super</span>(message, cause);</div><div class="line">		<span class="built_in">this</span>.errorCode=errorCode;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="keyword">String</span> getErrorCode() &#123;</div><div class="line">		<span class="keyword">return</span> errorCode;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>2.调用该类</strong></p>
-<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileUtils</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> readFile(<span class="keyword">String</span> filePath)&#123;</div><div class="line">		StringBuffer sb=<span class="keyword">new</span> <span class="type">StringBuffer</span>();</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			BufferedReader reader=<span class="keyword">new</span> <span class="type">BufferedReader</span>(<span class="keyword">new</span> <span class="type">FileReader</span>(filePath));</div><div class="line">			<span class="keyword">String</span> line=<span class="literal">null</span>;</div><div class="line">			<span class="keyword">while</span>((line=reader.readLine())!=<span class="literal">null</span>)&#123;</div><div class="line">				sb.append(line);</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</div><div class="line">			<span class="comment">//将原始对象放到新对象中去</span></div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">MyException</span>(<span class="string">"文件没有找到！"</span>, <span class="string">"1"</span>, e);</div><div class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">MyException</span>(<span class="string">"文件读取有误！"</span>, <span class="string">"2"</span>, e);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> sb.toString();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="五、注意事项"><a href="#五、注意事项" class="headerlink" title="五、注意事项"></a><strong>五、注意事项</strong></h3><p>1)  必须在 try 之后添加 catch 或 finally 块。try 块后可同时接 catch 和 finally 块，但至少有一个块。<br>2) 必须遵循块顺序：若代码同时使用 catch 和 finally 块，则必须将 catch 块放在 try 块之后。<br>3) 一个 try 块可能有多个 catch 块。若如此，则执行第一个匹配块<br>即Java虚拟机会把实际抛出的异常对象依次和各个catch代码块声明的异常类型匹配，如果异常对象为某个异常类型或其子类的实例，就执行这个catch代码块，不会再执行其他的 catch代码块。<br>4) 可嵌套 try-catch-finally 结构。<br>5) 在 try-catch-finally 结构中，可重新抛出异常。<br>6)多个catch的顺序一定要遵循子类在上父类在下的规则。<br>7)一个方法被重写，被重写的方法必须抛出相同的异常或异常的子类。<br>8)若父类方法抛出多个异常，那子类重写该方法必须抛出哪些异常的一个子集。</p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -226,7 +187,7 @@
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -239,113 +200,225 @@
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://hanyuanzhen.com/2015/11/24/核心java系列——异常处理机制/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
   
-<nav id="article-nav">
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/02/24/核心java系列——I-O流详解(一)/" class="archive-article-date">
+  	<time datetime="2017-02-24T07:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-24</time>
+</a>
+        </div>
+    	 
   
-    <a href="/2015/11/24/核心java系列——I-O流详解(一)/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          核心java系列——I/O流详解（一）
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2015/11/20/核心java/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">核心java系列-抽象类和接口</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-
-
-
-
-  
-  <div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="核心java系列——异常处理机制" data-title="核心java系列——异常处理机制" data-url="http://hanyuanzhen.com/2015/11/24/核心java系列——异常处理机制/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"true"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/02/24/核心java系列——I-O流详解(一)/">核心java系列——I/O流详解（一）</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
+          
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/核心java/" class="article-tag-list-link color2">核心java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/02/20/核心java系列——java中继承/" class="archive-article-date">
+  	<time datetime="2017-02-20T07:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-20</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/02/20/核心java系列——java中继承/">核心java系列——java的继承</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">继承</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/核心java/" class="article-tag-list-link color2">核心java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/01/01/核心java系列——线程（二）/" class="archive-article-date">
+  	<time datetime="2017-01-01T08:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/01/01/核心java系列——线程（二）/">核心java系列——线程（二）</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/核心java/" class="article-tag-list-link color2">核心java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/01/01/核心java系列——线程（一）/" class="archive-article-date">
+  	<time datetime="2017-01-01T07:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/01/01/核心java系列——线程（一）/">核心java系列——线程（一）</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/核心java/" class="article-tag-list-link color2">核心java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
+  
+
+    
 
 
           </div>
@@ -368,8 +441,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
@@ -426,26 +499,6 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">版本控制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ant</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">web开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hiberante</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">图像裁剪</a>
               </li>
              
@@ -454,7 +507,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SVN</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">web开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -467,6 +524,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">AIXS2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SVN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">版本控制</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -499,6 +564,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目构建</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hiberante</a>
               </li>
              
               <li class="article-tag-list-item">

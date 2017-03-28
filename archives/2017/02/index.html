@@ -6,24 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://hanyuanzhen.com">
-  <title>核心java系列-抽象类和接口 | 韩元桢博客</title>
+  <title>Archives: 2017/2 | 韩元桢博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##简介
-
-java中，抽象类和接口是支持抽象概念的两种机制，因为它们的存在，赋予了java强大的面向对象编程能 力。接口抽象类在抽象定义上有很多相似地方，甚至可以相互替换。但它们还是有区别的，下面从接口，抽象类以及两者的区别等方面来分析。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="核心java系列-抽象类和接口">
-<meta property="og:url" content="http://hanyuanzhen.com/2015/11/20/核心java/index.html">
+  <meta name="description" content="韩元桢博客 技术博客 学习总结 思考感悟 知识管理">
+<meta property="og:type" content="website">
+<meta property="og:title" content="韩元桢博客">
+<meta property="og:url" content="http://hanyuanzhen.com/archives/2017/02/index.html">
 <meta property="og:site_name" content="韩元桢博客">
-<meta property="og:description" content="##简介
-
-java中，抽象类和接口是支持抽象概念的两种机制，因为它们的存在，赋予了java强大的面向对象编程能 力。接口抽象类在抽象定义上有很多相似地方，甚至可以相互替换。但它们还是有区别的，下面从接口，抽象类以及两者的区别等方面来分析。">
-<meta property="og:updated_time" content="2017-03-11T13:10:27.000Z">
+<meta property="og:description" content="韩元桢博客 技术博客 学习总结 思考感悟 知识管理">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="核心java系列-抽象类和接口">
-<meta name="twitter:description" content="##简介
-
-java中，抽象类和接口是支持抽象概念的两种机制，因为它们的存在，赋予了java强大的面向对象编程能 力。接口抽象类在抽象定义上有很多相似地方，甚至可以相互替换。但它们还是有区别的，下面从接口，抽象类以及两者的区别等方面来分析。">
+<meta name="twitter:title" content="韩元桢博客">
+<meta name="twitter:description" content="韩元桢博客 技术博客 学习总结 思考感悟 知识管理">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -153,73 +146,36 @@ java中，抽象类和接口是支持抽象概念的两种机制，因为它们�
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-核心java" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      核心java系列-抽象类和接口
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/02/24/核心java系列——I-O流详解(一)/" class="archive-article-date">
+  	<time datetime="2017-02-24T07:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-24</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/02/24/核心java系列——I-O流详解(一)/">核心java系列——I/O流详解（一）</a>
     </h1>
   
 
-        
-        <a href="/2015/11/20/核心java/" class="archive-article-date">
-  	<time datetime="2015-11-20T11:17:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##简介</p>
-<blockquote>
-<p>java中，抽象类和接口是支持抽象概念的两种机制，因为它们的存在，赋予了java强大的面向对象编程能 力。接口抽象类在抽象定义上有很多相似地方，甚至可以相互替换。但它们还是有区别的，下面从接口，抽象类以及两者的区别等方面来分析。<br><a id="more"></a></p>
-<p>##一、抽象类<br><strong>在面向对象领域，一切都可以理解为对象，对象可以用类来描述。但不是所有的类都是来描述对象的。这些类中没有包含足够的信息来描绘一个具体的对象，这样的类就是抽象类。</strong><br>抽象类往往用来表征我们在对问题领域进行分析、 设计中得出的抽象概念，是对一些类的本质的抽象。比如在车子的类别中，有自行车，桥车，它们的本质属性都可以归类为车，但这个车不能描述出自行车和桥车的区别，需要通过自行车的定义来具体描述车的性质，所以车可以理解为一个抽象类的概念。<br>(1).在面向对象中，抽象类是不能是实例化的，在抽象类中可以定义一组抽象方法，即没有具体实现的方法，在方法前加上abstract关键字来修饰。这些抽象方法的实现需要具体的派生类去实现。<br>(2)抽象类也可以继承，其目的也是为了体现继承，抽取出类的相同性质，体现OOP原则。所以在使用抽象类时需要注意以下几点:</p>
-<ol>
-<li>抽象类不能被实例化，若一个类包含了一个以上的抽象方法，那么这个类也必须定义为抽象类（即必须也用abstract来修饰这个类）。</li>
-<li>抽象类的抽象方法必须由其其子类实现。</li>
-<li>抽象类中可以保护具体的实现方法，也可以不包含抽象方法</li>
-<li>abstract不能与final并列修饰同一个类。</li>
-<li>abstract 不能与private、static、final或native并列修饰同一个方法。</li>
-</ol>
-</blockquote>
-<p>下面通过一个实例来说明</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Bird</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"鸟会吃虫子..."</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Eagle</span> <span class="keyword">extends</span> <span class="title">Bird</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">crash</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"Eagle...会抓老鼠"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Parrot</span> <span class="keyword">extends</span> <span class="title">Bird</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sign</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"Parrot "</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AbtractTest</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		Bird b1=<span class="keyword">new</span> Parrot();</div><div class="line">		Bird b2=<span class="keyword">new</span> Eagle();</div><div class="line">		b1.fly();</div><div class="line">		b2.fly();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>##二、接口<br>接口不是类，是类的功能的描述，不能实例化一个接口，只能new接口的实现类。它比抽象类更加抽象。接口是类所依赖的一种规范化形式，没有具体的实现方法，若实现该接口类，则必须实现该接口的所有方法，用implements是实现，接口的定义由interface声明。<br>接口是对抽象类的一种可扩展，因为抽象类是不能实现多继承的，但接口可以实现多继承，各被继承的接口由逗号分隔，当然接口和抽象类可以联合使用，如 A extends B implements C,D{};<br>在接口使用中需要注意以下几点：<br>1.接口中的所有方法必须要被实现。<br>2.接口只可以定义不可变的成员变量。如 static final String  A_PARAM=””;<br>3.接口不能用new去实例化,但可以声明一个接口变量，该变量必须引用一个实现该接口的类的对象，可以使用 instanceof 检查一个对象是否实现了某个特定的接口。例如：if(anObject instanceof Comparable){}。<br>实例介绍如下:</p>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">	<span class="meta">#接口</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Common</span> &#123;</div><div class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span>(<span class="params"></span>) throws Exception</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="meta">#实现类</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CommonImpl</span> <span class="title">implements</span> <span class="title">Common</span> &#123;</div><div class="line">		@<span class="function">Override</span></div><div class="line">		<span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span>(<span class="params"></span>) throws Exception &#123;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">InterfaceTest</span> &#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>) throws Exception </span>&#123;</div><div class="line">		CommonImpl cl=<span class="keyword">new</span> CommonImpl();</div><div class="line">		cl.run();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>##三、接口和抽象类的区别<br>尽管接口和和抽象类有很多相似处，都是用来被继承或被实现，但也有区别，下面从方式的实现，构造器，访问修饰符，多继承，效率等方面进行比较:<br>| 参数     |    抽象类 | 接口  |<br>| :——– | ——–:| :–: |<br>| 默认的方法实现  | 它可以有默认的方法实现 | 接口完全是抽象的,它根本不存在方法的实现 |<br>| 实现    |   子类使用extends关键字来继承抽象类。如果子类不是抽象类的话，它需要提供抽象类中所有声明的方法的实现。|子类使用关键字implements来实现接口。它需要提供接口中所有声明的方法的实现 |<br>|构造器      |   抽象类可以有构造器| 接口不能有构造器  |<br>|修饰符     |    抽象方法可以有public、protected和default这些修饰符 | 接口方法默认修饰符是public。你不可以使用其它修饰符。  |<br>|main方法      |   抽象方法可以有main方法并且我们可以运行它| 接口没有main方法，因此我们不能运行它。  |<br>|多继承      |    抽象方法可以继承一个类和实现多个接口 | 接口只可以继承一个或多个其它接口|<br>|效率      |    它比接口速度要快 | 接口是稍微有点慢的，因为它需要时间去寻找在类中实现的方法。 |<br>|添加新方法    |    如果你往抽象类中添加新的方法，你可以给它提供默认的实现。因此你不需要改变你现在的代码。 | 如果你往接口中添加方法，那么你必须改变实现该接口的类。  |</p>
-<p>##四、总结<br>1.如果你拥有一些方法并且想让它们中的一些有默认实现，那么使用抽象类吧。<br>2.如果你想实现多重继承，那么你必须使用接口。由于Java不支持多继承，子类不能够继承多个类，但可以实现多个接口。因此你就可以使用接口来解决它。<br>3.如果基本功能在不断改变，那么就需要使用抽象类。如果不断改变基本功能并且使用接口，那么就需要改变所有实现了该接口的类。</p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -231,7 +187,7 @@ java中，抽象类和接口是支持抽象概念的两种机制，因为它们�
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -244,113 +200,70 @@ java中，抽象类和接口是支持抽象概念的两种机制，因为它们�
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://hanyuanzhen.com/2015/11/20/核心java/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
   
-<nav id="article-nav">
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/02/20/核心java系列——java中继承/" class="archive-article-date">
+  	<time datetime="2017-02-20T07:47:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-20</time>
+</a>
+        </div>
+    	 
   
-    <a href="/2015/11/24/核心java系列——异常处理机制/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          核心java系列——异常处理机制
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2015/11/07/jquery实现页面无限滚动插件/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">jquery实现页面无限滚动插件</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-
-
-
-
-  
-  <div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="核心java" data-title="核心java系列-抽象类和接口" data-url="http://hanyuanzhen.com/2015/11/20/核心java/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"true"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/02/20/核心java系列——java中继承/">核心java系列——java的继承</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">继承</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
+          
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/核心java/" class="article-tag-list-link color2">核心java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
+  
+
+    
 
 
           </div>
@@ -373,8 +286,8 @@ java中，抽象类和接口是支持抽象概念的两种机制，因为它们�
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
@@ -431,26 +344,6 @@ java中，抽象类和接口是支持抽象概念的两种机制，因为它们�
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">版本控制</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Ant</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">web开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hiberante</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">图像裁剪</a>
               </li>
              
@@ -459,7 +352,11 @@ java中，抽象类和接口是支持抽象概念的两种机制，因为它们�
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SVN</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">web开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -472,6 +369,14 @@ java中，抽象类和接口是支持抽象概念的两种机制，因为它们�
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">AIXS2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SVN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">版本控制</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -504,6 +409,10 @@ java中，抽象类和接口是支持抽象概念的两种机制，因为它们�
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">项目构建</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hiberante</a>
               </li>
              
               <li class="article-tag-list-item">
